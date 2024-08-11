@@ -11,7 +11,8 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "bot:dev": "bun run --watch bot/src/main.ts"
   },
   "dependencies": {
     "@auth/core": "^0.34.2",
@@ -23,6 +24,7 @@
     "@t3-oss/env-nextjs": "^0.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "envalid": "^8.0.0",
     "lucide-react": "^0.427.0",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
@@ -32,9 +34,11 @@
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.0",
     "tailwindcss-animate": "^1.0.7",
+    "tslog": "^4.9.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

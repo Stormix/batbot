@@ -7,12 +7,12 @@ generator client {
 
 generator zod {
   provider              = "zod-prisma"
-  output                = "./zod" 
-  relationModel         = true 
-  modelCase             = "camelCase" 
-  modelSuffix           = "Schema" 
-  useDecimalJs          = true 
-  prismaJsonNullability = true 
+  output                = "./zod"
+  relationModel         = true
+  modelCase             = "camelCase"
+  modelSuffix           = "Schema"
+  useDecimalJs          = true
+  prismaJsonNullability = true
 }
 
 datasource db {
@@ -20,22 +20,19 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  
-  access_token       String?  
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  
-  session_state      String?
-
-  
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -51,13 +48,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id               String             @id @default(cuid())
+  name             String?
+  email            String?            @unique
+  emailVerified    DateTime?
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
+  BotConfiguration BotConfiguration[]
+  BotCommand       BotCommand[]
 }
 
 model VerificationToken {
@@ -66,4 +65,26 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model BotConfiguration {
+  id      String  @id @default(cuid())
+  userId  String
+  enabled Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BotCommand {
+  id     String @id @default(cuid())
+  userId String
+
+  command  String
+  response String
+  cooldown Int     @default(0)
+  aliases  String  @default("[]")
+  minRole  Int     @default(0)
+  enabled  Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
