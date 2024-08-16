@@ -71,6 +71,8 @@ model BotConfiguration {
   id      String  @id @default(cuid())
   userId  String
   enabled Boolean @default(false)
+  commandPrefix String @default("!")
+  enabledPlatforms String @default("[]")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

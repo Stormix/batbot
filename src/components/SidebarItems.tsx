@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-import { LucideIcon } from 'lucide-react'
+import { LucideIcon } from 'lucide-react';
 
-import { cn } from '@/lib/utils'
-import { defaultLinks, additionalLinks } from '@/config/nav'
+import { additionalLinks, defaultLinks } from '@/config/nav';
+import { cn } from '@/lib/utils';
 
 export interface SidebarLink {
-  title: string
-  href: string
-  icon: LucideIcon
+  title: string;
+  href: string;
+  icon: LucideIcon;
 }
 
 const SidebarItems = () => {
@@ -22,13 +22,13 @@ const SidebarItems = () => {
         ? additionalLinks.map((l) => <SidebarLinkGroup links={l.links} title={l.title} border key={l.title} />)
         : null}
     </>
-  )
-}
-export default SidebarItems
+  );
+};
+export default SidebarItems;
 
 const SidebarLinkGroup = ({ links, title, border }: { links: SidebarLink[]; title?: string; border?: boolean }) => {
-  const fullPathname = usePathname()
-  const pathname = '/' + fullPathname.split('/')[1]
+  const fullPathname = usePathname();
+  const pathname = '/' + fullPathname.split('/')[1];
 
   return (
     <div className={border ? 'border-border border-t my-8 pt-4' : ''}>
@@ -41,13 +41,14 @@ const SidebarLinkGroup = ({ links, title, border }: { links: SidebarLink[]; titl
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
+
 const SidebarLink = ({ link, active }: { link: SidebarLink; active: boolean }) => {
   return (
     <Link
       href={link.href}
-      className={`group transition-colors p-2 inline-block hover:bg-popover hover:text-primary text-muted-foreground text-xs hover:shadow rounded-md w-full${
+      className={`group transition-colors p-2 inline-block hover:bg-popover hover:text-primary text-muted-foreground text-sm hover:shadow rounded-md w-full${
         active ? ' text-primary font-semibold' : ''
       }`}
     >
@@ -59,5 +60,5 @@ const SidebarLink = ({ link, active }: { link: SidebarLink; active: boolean }) =
         <span>{link.title}</span>
       </div>
     </Link>
-  )
-}
+  );
+};

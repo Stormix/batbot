@@ -1,22 +1,22 @@
-import { AccountCard, AccountCardFooter, AccountCardBody } from './AccountCard'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { toast } from 'sonner'
-import { useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import { toast } from 'sonner';
+import { AccountCard, AccountCardBody, AccountCardFooter } from './AccountCard';
 
 export default function UpdateEmailCard({ email }: { email: string }) {
-  const [isPending, startTransition] = useTransition()
-  const router = useRouter()
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault()
-    const target = event.target as HTMLFormElement
-    const form = new FormData(target)
-    const { email } = Object.fromEntries(form.entries()) as { email: string }
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+    const form = new FormData(target);
+    const { email } = Object.fromEntries(form.entries()) as { email: string };
     if (email.length < 3) {
-      toast.error('Email must be longer than 3 characters.')
-      return
+      toast.error('Email must be longer than 3 characters.');
+      return;
     }
 
     startTransition(async () => {
@@ -24,11 +24,11 @@ export default function UpdateEmailCard({ email }: { email: string }) {
         method: 'PUT',
         body: JSON.stringify({ email }),
         headers: { 'Content-Type': 'application/json' }
-      })
-      if (res.status === 200) toast.success('Successfully updated email!')
-      router.refresh()
-    })
-  }
+      });
+      if (res.status === 200) toast.success('Successfully updated email!');
+      router.refresh();
+    });
+  };
 
   return (
     <AccountCard
@@ -46,5 +46,5 @@ export default function UpdateEmailCard({ email }: { email: string }) {
         </AccountCardFooter>
       </form>
     </AccountCard>
-  )
+  );
 }

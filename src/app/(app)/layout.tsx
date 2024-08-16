@@ -1,10 +1,10 @@
-import { checkAuth } from '@/lib/auth/utils'
-import { Toaster } from '@/components/ui/sonner'
-import Navbar from '@/components/Navbar'
-import Sidebar from '@/components/Sidebar'
-import NextAuthProvider from '@/lib/auth/Provider'
+import Navbar from '@/components/Navbar';
+import Sidebar from '@/components/Sidebar';
+import { Toaster } from '@/components/ui/sonner';
+import NextAuthProvider from '@/lib/auth/Provider';
+import { checkAuth } from '@/lib/auth/utils';
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  await checkAuth()
+  await checkAuth();
   return (
     <main>
       <NextAuthProvider>
@@ -19,5 +19,5 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
       <Toaster richColors />
     </main>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import UserSettings from './UserSettings'
-import { checkAuth, getUserAuth } from '@/lib/auth/utils'
+import { checkAuth, getUserAuth } from '@/lib/auth/utils';
+import UserSettings from './UserSettings';
 
 export default async function Account() {
-  await checkAuth()
-  const { session } = await getUserAuth()
+  await checkAuth();
+  const { session } = await getUserAuth();
 
   return (
     <main>
@@ -12,5 +12,5 @@ export default async function Account() {
         <UserSettings session={session} />
       </div>
     </main>
-  )
+  );
 }

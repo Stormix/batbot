@@ -2,12 +2,12 @@ import type { Event } from '@/types/events';
 import { ManagerMode } from '@/types/manager';
 import type { BotConfiguration } from '@prisma/client';
 import { BaseEmitter } from './base';
-import Bot from './bot';
+import BotShard from './bot-shard';
 import { DEFAULT_DELAY, DEFAULT_TIMEOUT } from './constants';
 
 class BotManager extends BaseEmitter {
   mode: ManagerMode;
-  bots: Map<string, Bot> = new Map();
+  bots: Map<string, BotShard> = new Map();
   file: string;
 
   constructor(file: string, mode = ManagerMode.PROCESS) {
@@ -16,8 +16,8 @@ class BotManager extends BaseEmitter {
     this.mode = mode;
   }
 
-  async createBot(config: BotConfiguration): Promise<Bot> {
-    const bot = new Bot(config, this);
+  async createBot(config: BotConfiguration): Promise<BotShard> {
+    const bot = new BotShard(config, this);
 
     this.bots.set(config.id, bot);
     this.emit('botCreated', bot);
@@ -25,7 +25,11 @@ class BotManager extends BaseEmitter {
     return bot;
   }
 
-  async spawn(configurations: BotConfiguration[], delay = DEFAULT_DELAY, timeout = DEFAULT_TIMEOUT): Promise<Bot[]> {
+  async spawn(
+    configurations: BotConfiguration[],
+    delay = DEFAULT_DELAY,
+    timeout = DEFAULT_TIMEOUT
+  ): Promise<BotShard[]> {
     return Promise.all(
       configurations.map(async (config) => {
         const bot = await this.createBot(config);
@@ -52,6 +56,13 @@ class BotManager extends BaseEmitter {
       })
     );
     this.bots.clear();
+  }
+
+  async stats() {
+    return {
+      mode: this.mode,
+      bots: [...this.bots.values()].map((bot) => bot.stats())
+    };
   }
 }
 

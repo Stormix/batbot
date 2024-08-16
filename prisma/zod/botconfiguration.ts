@@ -5,6 +5,8 @@ export const botConfigurationSchema = z.object({
   id: z.string(),
   userId: z.string(),
   enabled: z.boolean(),
+  commandPrefix: z.string(),
+  enabledPlatforms: z.string(),
 })
 
 export interface CompleteBotConfiguration extends z.infer<typeof botConfigurationSchema> {
