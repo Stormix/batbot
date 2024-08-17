@@ -1,7 +1,7 @@
 import CommandsTable from '@/components/molecules/commands-table';
 import PageBreadcrumbs from '@/components/molecules/page-breadcrumbs';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import AddCommandDialog from '@/components/organisms/add-command';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getUserAuth } from '@/lib/auth/utils';
 
@@ -13,7 +13,7 @@ export default async function Home() {
       <PageBreadcrumbs path={['commands']} />
 
       <section className="space-y-4 mt-8">
-        <Tabs defaultValue="system">
+        <Tabs defaultValue="custom">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="system">Built-in Commands</TabsTrigger>
             <TabsTrigger value="custom">Custom Commands</TabsTrigger>
@@ -27,23 +27,20 @@ export default async function Home() {
               <CardContent>
                 <CommandsTable commands={[]} />
               </CardContent>
-              <CardFooter className="flex justify-end border-t pt-4 gap-4">
-                <Button type="submit">Save changes</Button>
-              </CardFooter>
             </Card>
           </TabsContent>
           <TabsContent value="custom">
             <Card>
-              <CardHeader>
-                <CardTitle>Custom Commands</CardTitle>
-                <CardDescription>These are the commands that you have created.</CardDescription>
+              <CardHeader className="flex justify-between flex-row">
+                <div className="flex flex-col justify-start items-start gap-2">
+                  <CardTitle>Custom Commands</CardTitle>
+                  <CardDescription>These are the commands that you have created.</CardDescription>
+                </div>
+                <AddCommandDialog />
               </CardHeader>
               <CardContent>
                 <CommandsTable commands={[]} />
               </CardContent>
-              <CardFooter className="flex justify-end border-t pt-4 gap-4">
-                <Button type="submit">Save changes</Button>
-              </CardFooter>
             </Card>
           </TabsContent>
         </Tabs>

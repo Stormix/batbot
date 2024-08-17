@@ -46,20 +46,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, loading, icon, asChild, children, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
     const fallback = loading || icon;
+
+    if (fallback) {
+      return (
+        <button className={cn(buttonVariants({ variant, size, className }), 'gap-2')} ref={ref} {...props}>
+          {!loading && icon}
+          {loading && <LoaderCircle className="w-4 h-4 animate-spin" />}
+          {children ?? null}
+        </button>
+      );
+    }
     return (
-      <>
-        {fallback && (
-          <button className={cn(buttonVariants({ variant, size, className }), 'gap-2')} ref={ref} {...props}>
-            {!loading && icon}
-            {loading && <LoaderCircle className="w-4 h-4 animate-spin" />}
-            {children ?? null}
-          </button>
-        )}
-        {!fallback && (
-          // eslint-disable-next-line react/no-children-prop
-          <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} children={children} />
-        )}
-      </>
+      // eslint-disable-next-line react/no-children-prop
+      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} children={children} />
     );
   }
 );

@@ -89,4 +89,6 @@ model BotCommand {
   enabled  Boolean @default(false)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, command])
 }
