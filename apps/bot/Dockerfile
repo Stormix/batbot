@@ -37,4 +37,5 @@ RUN bunx prisma generate
 WORKDIR /usr/src/app/apps/bot
 
 EXPOSE 3001
-ENTRYPOINT [ "bun", "start" ]
+
+ENTRYPOINT [ "bun", "run", "src/main.ts" ]
