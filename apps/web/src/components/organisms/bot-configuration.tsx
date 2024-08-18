@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { upsert } from '@/app/(app)/chatbot/action';
 import { Configuration, configurationSchema } from '@/app/(app)/chatbot/schema';
@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
 import useServerAction from '@/hooks/useServerAction';
-import { parseConfiguration } from '@/lib/utils/db';
 import { Platform } from '@/types/bot';
 import { Maybe } from '@/types/generics';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,7 +23,10 @@ import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group';
 const BotConfigurationForm = ({ initialValues }: { initialValues: Maybe<BotConfiguration> }) => {
   const form = useForm<Configuration>({
     resolver: zodResolver(configurationSchema),
-    defaultValues: parseConfiguration(initialValues) ?? {
+    defaultValues: initialValues ?{
+      ...initialValues,
+      enabledPlatforms:JSON.parse(initialValues.enabledPlatforms)
+    } :{
       enabled: false,
       commandPrefix: '!',
       enabledPlatforms: []

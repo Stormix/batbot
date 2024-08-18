@@ -1,11 +1,15 @@
 import PageBreadcrumbs from '@/components/molecules/page-breadcrumbs';
 import BotConfiguration from '@/components/organisms/bot-configuration';
 import { getUserAuth } from '@/lib/auth/utils';
-import { getConfiguration } from '@/lib/utils/db';
+import { db } from '@/lib/db';
 
 export default async function ChatBot() {
   const { session } = await getUserAuth();
-  const botConfiguration = await getConfiguration(session!.user.id);
+  const botConfiguration = await db.botConfiguration.findUnique({
+    where: {
+      userId: session!.user.id
+    }
+  });
 
   return (
     <main className="flex flex-col gap-2">

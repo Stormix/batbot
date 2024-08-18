@@ -6,7 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getUserAuth } from '@/lib/auth/utils';
 import { builtinCommands } from '@/lib/constants';
 import { db } from '@/lib/db';
-import { getConfiguration } from '@/lib/utils/db';
 import { CommandCategory } from '@/types/bot';
 
 export default async function Home() {
@@ -19,8 +18,11 @@ export default async function Home() {
     take: 100
   });
 
-  const configuration = await getConfiguration(session!.user.id);
-
+  const configuration = await db.botConfiguration.findUnique({
+    where: {
+      userId: session!.user.id
+    }
+  });
   return (
     <main className="flex flex-col gap-2">
       <h3 className="text-2xl font-semibold">Bot Commands</h3>
