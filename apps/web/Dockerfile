@@ -37,8 +37,10 @@ RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n \
 COPY . .
 RUN bun install
 
-WORKDIR /usr/src/app/apps/web
+WORKDIR /usr/src/app/packages/db
+RUN bunx prisma generate
 
+WORKDIR /usr/src/app/apps/web
 RUN bun run build
 ENV NODE_ENV production
 
