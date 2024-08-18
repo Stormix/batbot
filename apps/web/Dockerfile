@@ -44,6 +44,8 @@ WORKDIR /usr/src/app/apps/web
 RUN bun run build
 ENV NODE_ENV production
 
-WORKDIR /usr/src/app/
+WORKDIR /usr/src/app/apps/web/.next/standalone/
 EXPOSE 3000
-ENTRYPOINT [ "node", "./apps/web/.next/standalone/server.js" ]
+# Symlink /usr/src/app/node_modules to /usr/src/app/apps/web/node_modules
+RUN ln -s /usr/src/app/node_modules /usr/src/app/apps/web/node_modules
+ENTRYPOINT [ "node", "./server.js" ]
