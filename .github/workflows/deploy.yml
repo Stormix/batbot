@@ -22,7 +22,7 @@ jobs:
         run: tar -cvf ./deploy.tar --exclude='node_modules' --exclude='.git' --exclude='.next' *
 
       - name: Deploy bot
-        run: caprover deploy -h ${{ secrets.CAPROVER_SERVER_PROD }} -p ${{ secrets.CAPROVER_PASSWORD_PROD }} -a batbot-api -t ./deploy.tar
+        run: caprover deploy -h ${{ secrets.CAPROVER_SERVER_PROD }} -p ${{ secrets.CAPROVER_PASSWORD_PROD }} -a batbot-web -t ./deploy.tar
 
       - name: Deploy web
         run: caprover deploy -h ${{ secrets.CAPROVER_SERVER_PROD }} -p ${{ secrets.CAPROVER_PASSWORD_PROD }} -a batbot-web -t ./deploy.tar
