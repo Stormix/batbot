@@ -31,6 +31,9 @@ RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n \
 COPY . .
 RUN bun install
 
+WORKDIR /usr/src/app/packages/db
+RUN bunx prisma generate
+
 WORKDIR /usr/src/app/apps/bot
 
 EXPOSE 3001
