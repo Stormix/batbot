@@ -46,6 +46,7 @@ ENV NODE_ENV production
 
 WORKDIR /usr/src/app/apps/web/.next/standalone/
 EXPOSE 3000
+
 # Symlink /usr/src/app/node_modules to /usr/src/app/apps/web/node_modules
-RUN ln -s /usr/src/app/node_modules /usr/src/app/apps/web/node_modules
+RUN ln -s /usr/src/app/node_modules /usr/src/app/apps/web/.next/node_modules
 ENTRYPOINT [ "node", "./server.js" ]
