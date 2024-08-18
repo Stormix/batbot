@@ -1,6 +1,6 @@
+import { db } from '@/db';
 import env from '@/env';
 import { ManagerMode } from '@/types/manager';
-import { db } from '@batbot/db';
 import server from 'bunrest';
 import { join } from 'path';
 import { Base } from './base';
