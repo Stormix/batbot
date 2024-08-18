@@ -1,5 +1,5 @@
 import { SidebarLink } from '@/components/SidebarItems';
-import { BotIcon, Cog, GaugeIcon, User, WandIcon } from 'lucide-react';
+import { BookIcon, BotIcon, Cog, GaugeIcon, HelpCircleIcon, NotebookIcon, User, WandIcon } from 'lucide-react';
 
 type AdditionalLinks = {
   title: string;
@@ -10,8 +10,17 @@ export const defaultLinks: SidebarLink[] = [
   { href: '/dashboard', title: 'Dashboard', icon: GaugeIcon },
   { href: '/chatbot', title: 'Chat Bot', icon: BotIcon },
   { href: '/commands', title: 'Commands', icon: WandIcon },
+  { href: '/logs', title: 'Logs', icon: NotebookIcon },
   { href: '/account', title: 'Account', icon: User },
   { href: '/settings', title: 'Settings', icon: Cog }
 ];
 
-export const additionalLinks: AdditionalLinks[] = [];
+export const additionalLinks: AdditionalLinks[] = [
+  {
+    title: 'Support',
+    links: [
+      { href: '/docs', title: 'Help Docs', icon: BookIcon },
+      { href: '/support', title: 'Support', icon: HelpCircleIcon }
+    ]
+  }
+];

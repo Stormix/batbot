@@ -9,6 +9,7 @@
 		"editor.codeActionsOnSave": {
 			"source.fixAll.eslint": "always",
 			"source.organizeImports": "always"
-		}
+		},
+		"typescript.tsdk": "node_modules\\typescript\\lib"
 	}
 }

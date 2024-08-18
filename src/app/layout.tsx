@@ -1,9 +1,15 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { cn } from '@/lib/utils/styles';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Rajdhani } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  variable: '--font-rajdhani',
+  weight: '400'
+});
 
 export const metadata: Metadata = {
   title: 'Batbot',
@@ -17,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, rajdhani.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>

@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/styles';
 import { Platform } from '@/types/bot';
 import { BiLogoYoutube } from 'react-icons/bi';
 import { SiDiscord, SiKick, SiTwitch } from 'react-icons/si';

@@ -2,11 +2,12 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DataTablePagination } from '@/components/ui/table/pagination';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/styles';
 import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  Table as TableType,
   VisibilityState,
   flexRender,
   getCoreRowModel,
@@ -24,9 +25,16 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   className?: string;
   onRowClick?: (row: TData) => void;
+  Toolbar?: (props: { table: TableType<TData> }) => React.ReactNode;
 }
 
-export function DataTable<TData, TValue>({ columns, data, className, onRowClick }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  className,
+  onRowClick,
+  Toolbar
+}: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -55,6 +63,7 @@ export function DataTable<TData, TValue>({ columns, data, className, onRowClick 
   });
   return (
     <div className={cn('space-y-4', className)}>
+      {Toolbar && <Toolbar table={table} />}
       <div className="rounded-md border">
         <Table>
           <TableHeader>

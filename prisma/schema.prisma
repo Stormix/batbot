@@ -75,6 +75,8 @@ model BotConfiguration {
   enabledPlatforms String @default("[]")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
 }
 
 model BotCommand {

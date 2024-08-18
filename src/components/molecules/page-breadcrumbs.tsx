@@ -1,6 +1,5 @@
 import {
   Breadcrumb,
-  BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
@@ -12,18 +11,19 @@ interface PageBreadcrumbsProps {
 }
 
 const PageBreadcrumbs = ({ path }: PageBreadcrumbsProps) => {
+  // TODO: refine component
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbLink href={`/`}>Home</BreadcrumbLink>
         <BreadcrumbSeparator />
         {path.map((item, index) => (
-          <BreadcrumbItem key={index}>
-            <BreadcrumbLink className="capitalize" href={`/${item}`}>
+          <>
+            <BreadcrumbLink key={index} className="capitalize" href={`/${item}`}>
               {index === path.length - 1 ? <BreadcrumbPage>{item}</BreadcrumbPage> : item}
             </BreadcrumbLink>
             {index < path.length - 1 && <BreadcrumbSeparator />}
-          </BreadcrumbItem>
+          </>
         ))}
       </BreadcrumbList>
     </Breadcrumb>

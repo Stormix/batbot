@@ -1,7 +1,7 @@
-'use client'
-import UpdateNameCard from './UpdateNameCard'
-import UpdateEmailCard from './UpdateEmailCard'
-import { AuthSession } from '@/lib/auth/utils'
+'use client';
+import { AuthSession } from '@/lib/auth/utils';
+import UpdateEmailCard from './UpdateEmailCard';
+import UpdateNameCard from './UpdateNameCard';
 
 export default function UserSettings({ session }: { session: AuthSession['session'] }) {
   return (
@@ -9,5 +9,5 @@ export default function UserSettings({ session }: { session: AuthSession['sessio
       <UpdateNameCard name={session?.user.name ?? ''} />
       <UpdateEmailCard email={session?.user.email ?? ''} />
     </>
-  )
+  );
 }

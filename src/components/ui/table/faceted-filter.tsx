@@ -1,6 +1,5 @@
 import { Column } from '@tanstack/react-table';
 import * as React from 'react';
-import { GoPlusCircle } from 'react-icons/go';
 import { LuCheck } from 'react-icons/lu';
 
 import {
@@ -14,7 +13,8 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/styles';
+import { UserCircle } from 'lucide-react';
 import { Badge } from '../badge';
 import { Button } from '../button';
 
@@ -35,12 +35,11 @@ export function DataTableFacetedFilter<TData, TValue>({
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
-
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed py-1">
-          <GoPlusCircle className="mr-2 h-4 w-4" />
+          <UserCircle className="mr-2 h-4 w-4" />
           {title}
           {selectedValues?.size > 0 && (
             <>
@@ -55,7 +54,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                   </Badge>
                 ) : (
                   options
-                    .filter((option) => selectedValues.has(option.value))
+                    .filter((option) => selectedValues.has(option.value.toString()))
                     .map((option) => (
                       <Badge variant="secondary" key={option.value} className="rounded-sm px-1 font-normal">
                         {option.label}
