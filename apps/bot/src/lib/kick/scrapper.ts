@@ -30,6 +30,7 @@ export class KickScrapper {
 
     try {
       const jsonContent = await page.evaluate(() => {
+        // @ts-expect-error - TS doesn't know about the evaluate function
         const body = document.querySelector('body');
         if (!body) return null;
         const text = body.textContent;

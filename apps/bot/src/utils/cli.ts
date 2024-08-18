@@ -1,4 +1,3 @@
-import type { BotConfiguration } from '@prisma/client';
 import { parseArgs } from 'util';
 
 export const parseBotArgs = (args: string[]) => {
@@ -18,13 +17,6 @@ export const parseBotArgs = (args: string[]) => {
 
   return {
     mode: values.mode as string,
-    config: parseConfig(JSON.parse(values.config as string))
-  };
-};
-
-export const parseConfig = (config: BotConfiguration) => {
-  return {
-    ...config,
-    enabledPlatforms: JSON.parse(config.enabledPlatforms)
+    config: JSON.parse(values.config as string)
   };
 };
