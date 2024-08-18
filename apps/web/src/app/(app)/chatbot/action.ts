@@ -2,7 +2,9 @@
 
 import { authOptions } from '@/lib/auth/utils';
 import { db } from '@/lib/db';
+import { env } from '@/lib/env.mjs';
 import { handleError } from '@/lib/errors';
+import { queue } from '@batbot/core';
 import { BotConfiguration } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
@@ -18,19 +20,27 @@ export async function upsert(newCommand: Configuration) {
         error: 'You must be signed in to create a command'
       };
     }
-    // TODO: Implement the upsert function
+
     const configuration: Omit<BotConfiguration, 'id'> = {
       ...validatedPayload,
-      userId: session.user.id,
-      enabledPlatforms: JSON.stringify(validatedPayload.enabledPlatforms)
+      userId: session.user.id
     };
 
-    await db.botConfiguration.upsert({
+    const newConfiguration = await db.botConfiguration.upsert({
       where: {
         userId: session.user.id
       },
       create: configuration,
       update: configuration
+    });
+
+    const mqConnection = new queue.RabbitMQConnection(env.RABBITMQ_URI);
+    await mqConnection.sendToQueue(queue.constants.Queue.BOT_QUEUE, {
+      type: queue.constants.MessageType.BOT_CONFIGURATION_UPDATED,
+      payload: {
+        userId: session.user.id,
+        id: newConfiguration.id
+      }
     });
 
     revalidatePath('/commands');

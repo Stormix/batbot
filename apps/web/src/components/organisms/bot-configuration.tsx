@@ -24,10 +24,7 @@ const BotConfigurationForm = ({ initialValues }: { initialValues: Maybe<BotConfi
   const form = useForm<Configuration>({
     resolver: zodResolver(configurationSchema),
     defaultValues: initialValues
-      ? {
-          ...initialValues,
-          enabledPlatforms: JSON.parse(initialValues.enabledPlatforms)
-        }
+      ? initialValues
       : {
           enabled: false,
           commandPrefix: '!',

@@ -19,12 +19,7 @@ export async function create(newCommand: NewCommand) {
 
     const command = await db.botCommand.create({
       data: {
-        aliases: JSON.stringify(payload.aliases),
-        command: payload.command,
-        cooldown: payload.cooldown,
-        enabled: payload.enabled,
-        minRole: payload.minRole,
-        response: payload.response,
+        ...payload,
         userId: session.user.id
       }
     });

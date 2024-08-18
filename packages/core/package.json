@@ -2,13 +2,17 @@
   "name": "@batbot/core",
   "version": "1.0.0",
   "main": "src/index.ts",
+  "devDependencies": {
+    "@types/amqplib": "^0.10.5",
+    "bun-plugin-isolated-decl": "^0.1.4",
+    "oxc-transform": "^0.24.3",
+    "typescript": "^5.5.4"
+  },
   "scripts": {
     "pre:build": "bun prisma generate",
     "check-types": "tsc --noEmit"
   },
-  "devDependencies": {
-    "bun-plugin-isolated-decl": "^0.1.4",
-    "oxc-transform": "^0.24.3",
-    "typescript": "^5.5.4"
+  "dependencies": {
+    "amqplib": "^0.10.4"
   }
 }

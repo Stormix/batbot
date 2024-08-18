@@ -1,10 +1,10 @@
+import { db } from '@/db';
 import type { Event } from '@/types/events';
 import { ManagerMode } from '@/types/manager';
 import type { BotConfiguration } from '@prisma/client';
 import { BaseEmitter } from './base';
 import BotShard from './bot-shard';
 import { DEFAULT_DELAY, DEFAULT_TIMEOUT } from './constants';
-
 class BotManager extends BaseEmitter {
   mode: ManagerMode;
   bots: Map<string, BotShard> = new Map();
@@ -63,6 +63,27 @@ class BotManager extends BaseEmitter {
       mode: this.mode,
       bots: [...this.bots.values()].map((bot) => bot.stats())
     };
+  }
+
+  async respawn(configuration_id: string) {
+    const bot = this.bots.get(configuration_id);
+    if (bot) {
+      this.logger.info(`Bot(${configuration_id}) found, respawning...`);
+      await bot.destroy();
+      await bot.spawn();
+      this.logger.info(`Bot(${configuration_id}) respawned successfully!`);
+      return;
+    } else {
+      this.logger.info(`Bot(${configuration_id}) not found, attempting to create it...`);
+      const configuration = await db.botConfiguration.findUnique({
+        where: { id: configuration_id }
+      });
+      if (configuration) {
+        await this.createBot(configuration);
+        this.logger.info(`Bot(${configuration_id}) created successfully!`);
+        return;
+      }
+    }
   }
 }
 

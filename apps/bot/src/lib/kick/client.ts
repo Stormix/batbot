@@ -1,5 +1,5 @@
+import type { Bot } from '@/bot';
 import env from '@/env';
-import type { Bot } from '@/worker';
 import axios from 'axios';
 import WebSocket from 'ws';
 import Logger from '../logger';

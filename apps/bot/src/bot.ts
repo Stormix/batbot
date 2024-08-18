@@ -2,10 +2,13 @@ import type { BotConfiguration } from '@prisma/client';
 import type { Context } from 'vm';
 import type Adapter from './lib/adapter';
 import KickAdapter from './lib/adapters/kick';
+import TwitchAdapter from './lib/adapters/twitch';
 import { Base } from './lib/base';
 import Processor from './lib/processor';
 import { ManagerMode } from './types/manager';
 import { parseBotArgs } from './utils/cli';
+
+declare let self: Worker;
 
 export class Bot extends Base {
   readonly config: BotConfiguration;
@@ -29,7 +32,7 @@ export class Bot extends Base {
   async load_adapters() {
     // Load adapters
     this.logger.info('Loading adapters...');
-    this.adapters = [new KickAdapter(this)];
+    this.adapters = [new TwitchAdapter(this), new KickAdapter(this)];
 
     // Setup adapters
     for (const adapter of this.adapters) {

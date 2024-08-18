@@ -60,10 +60,6 @@ export default class KickAdapter extends Adapter<KickContext> {
     });
   }
 
-  async listenForMessages(): Promise<void> {
-    this.logger.debug('Listening for messages...');
-  }
-
   async setup() {
     this.client = new KickClient(this.bot);
     await this.client.setup();
@@ -74,7 +70,6 @@ export default class KickAdapter extends Adapter<KickContext> {
     if (!this.client) throw new Error('Kick client is not initialized!');
 
     await this.listenForCommands();
-    await this.listenForMessages();
 
     await this.client.connect();
     await this.client.join(env.KICK_CHANNEL);

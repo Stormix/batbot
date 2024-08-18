@@ -1,6 +1,7 @@
 import { db } from '@/db';
 import env from '@/env';
 import { ManagerMode } from '@/types/manager';
+import { queue } from '@batbot/core';
 import server from 'bunrest';
 import { join } from 'path';
 import { Base } from './base';
@@ -10,10 +11,13 @@ class Orchestrator extends Base {
   private _server: ReturnType<typeof server>;
   private _manager: BotManager;
 
+  readonly connection: queue.RabbitMQConnection;
+
   constructor() {
     super();
     this._server = server();
     this._manager = new BotManager(join(__dirname, '../bot.ts'), ManagerMode.PROCESS);
+    this.connection = new queue.RabbitMQConnection(env.RABBITMQ_URI);
   }
 
   async init() {
@@ -34,11 +38,20 @@ class Orchestrator extends Base {
     });
 
     await this._manager.spawn(bots ?? []);
+    await this.poll();
     return this._server.listen(env.PORT);
   }
 
   async poll() {
-    // TODO: Poll the database for new bots
+    await this.connection.consume(queue.constants.Queue.BOT_QUEUE, async (message) => {
+      console.log('Received message:', message);
+      switch (message.type) {
+        case queue.constants.MessageType.BOT_CONFIGURATION_UPDATED:
+          // TODO: respawn bot
+          this._manager.respawn(message.payload.id);
+          break;
+      }
+    });
   }
 }
 

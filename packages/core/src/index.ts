@@ -1,1 +1,5 @@
-export const test: () => void = () => console.log('test')
+import * as queue from './queue';
+
+export { queue };
+
+export const test: () => void = () => console.log('test');

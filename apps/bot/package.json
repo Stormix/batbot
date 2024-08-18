@@ -17,9 +17,11 @@
     "puppeteer": "^23.1.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
-    "tslog": "^4.9.3"
+    "tslog": "^4.9.3",
+    "twitch-js": "^2.0.0-beta.45"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.6",
     "@types/node": "^20"
   }
 }

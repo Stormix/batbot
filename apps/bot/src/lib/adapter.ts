@@ -1,8 +1,9 @@
-import type { Bot } from '@/worker';
+import type { Bot } from '@/bot';
 import type Logger from './logger';
 
 export enum Adapters {
-  Kick = 'kick'
+  Kick = 'kick',
+  Twitch = 'twitch'
 }
 
 export interface AdapterOptions {
@@ -33,7 +34,6 @@ abstract class Adapter<Context> {
   abstract setup(): Promise<void>;
   abstract listen(): Promise<void>;
   abstract listenForCommands(): Promise<void>;
-  abstract listenForMessages(): Promise<void>;
   abstract atAuthor(message: unknown): string;
 
   abstract createContext(message: unknown): Context;

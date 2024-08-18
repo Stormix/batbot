@@ -12,7 +12,4 @@ export const builtinCommands: BotCommand[] = [
     minRole: Role.User,
     aliases: ['help']
   }
-].map((command) => ({
-  ...command,
-  aliases: JSON.stringify(command.aliases) // Convert aliases to JSON string (SQLite doesn't support arrays)
-}));
+];
