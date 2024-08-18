@@ -4,7 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils/styles';
 import { Column } from '@tanstack/react-table';
@@ -19,7 +19,7 @@ interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
-  className,
+  className
 }: DataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>;

@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { signIn } from 'next-auth/react'
+import { signIn } from 'next-auth/react';
 
 const Page = () => {
   return (
@@ -15,7 +15,7 @@ const Page = () => {
         </button>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

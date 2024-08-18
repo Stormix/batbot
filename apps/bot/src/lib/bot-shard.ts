@@ -47,6 +47,7 @@ class BotShard extends BaseEmitter {
           smol: true,
           env: worker.SHARE_ENV,
           argv
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
         this._instance.onmessage = (event) => this.handleMessage(event.data);
         this._instance.addEventListener('close', () => this.handleExit(null));

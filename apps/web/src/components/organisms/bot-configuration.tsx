@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { upsert } from '@/app/(app)/chatbot/action';
 import { Configuration, configurationSchema } from '@/app/(app)/chatbot/schema';
@@ -23,14 +23,16 @@ import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group';
 const BotConfigurationForm = ({ initialValues }: { initialValues: Maybe<BotConfiguration> }) => {
   const form = useForm<Configuration>({
     resolver: zodResolver(configurationSchema),
-    defaultValues: initialValues ?{
-      ...initialValues,
-      enabledPlatforms:JSON.parse(initialValues.enabledPlatforms)
-    } :{
-      enabled: false,
-      commandPrefix: '!',
-      enabledPlatforms: []
-    }
+    defaultValues: initialValues
+      ? {
+          ...initialValues,
+          enabledPlatforms: JSON.parse(initialValues.enabledPlatforms)
+        }
+      : {
+          enabled: false,
+          commandPrefix: '!',
+          enabledPlatforms: []
+        }
   });
 
   const { isPending, onSubmit } = useServerAction(form, upsert, {

@@ -7,7 +7,7 @@ const env = cleanEnv(process.env, {
   KICK_COOKIES: str({}),
   KICK_USERNAME: str({}),
   KICK_CHANNEL: str({}),
-  BOT_SENTRY_DSN: str({}),
+  BOT_SENTRY_DSN: str({})
 });
 
 export type Env = typeof env;

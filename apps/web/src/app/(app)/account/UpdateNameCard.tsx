@@ -1,22 +1,22 @@
-'use client'
-import { AccountCard, AccountCardFooter, AccountCardBody } from './AccountCard'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { toast } from 'sonner'
-import { useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+'use client';
+import { AccountCard, AccountCardFooter, AccountCardBody } from './AccountCard';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import { useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function UpdateNameCard({ name }: { name: string }) {
-  const [isPending, startTransition] = useTransition()
-  const router = useRouter()
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault()
-    const target = event.target as HTMLFormElement
-    const form = new FormData(target)
-    const { name } = Object.fromEntries(form.entries()) as { name: string }
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+    const form = new FormData(target);
+    const { name } = Object.fromEntries(form.entries()) as { name: string };
     if (name.length < 3) {
-      toast.error('Name must be longer than 3 characters.')
-      return
+      toast.error('Name must be longer than 3 characters.');
+      return;
     }
 
     startTransition(async () => {
@@ -24,11 +24,11 @@ export default function UpdateNameCard({ name }: { name: string }) {
         method: 'PUT',
         body: JSON.stringify({ name }),
         headers: { 'Content-Type': 'application/json' }
-      })
-      if (res.status === 200) toast.success('Successfully updated name!')
-      router.refresh()
-    })
-  }
+      });
+      if (res.status === 200) toast.success('Successfully updated name!');
+      router.refresh();
+    });
+  };
 
   return (
     <AccountCard
@@ -46,5 +46,5 @@ export default function UpdateNameCard({ name }: { name: string }) {
         </AccountCardFooter>
       </form>
     </AccountCard>
-  )
+  );
 }

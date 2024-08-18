@@ -44,6 +44,6 @@ WORKDIR /usr/src/app/apps/web
 RUN bun run build
 ENV NODE_ENV production
 
-WORKDIR /usr/src/app/apps/web/.next/standalone
+WORKDIR /usr/src/app/
 EXPOSE 3000
-ENTRYPOINT [ "node", "server.js" ]
+ENTRYPOINT [ "node", "./apps/web/.next/standalone/server.js" ]

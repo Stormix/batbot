@@ -8,7 +8,7 @@ export interface UseServerActionOptions<R = unknown> {
 
 const useServerAction = <T extends FieldValues, R = unknown>(
   form: UseFormReturn<T>,
-  action: Function,
+  action: (values: T) => Promise<{ error?: string } & R>,
   options: UseServerActionOptions<R> = {}
 ) => {
   const { onSuccess, onError } = options;

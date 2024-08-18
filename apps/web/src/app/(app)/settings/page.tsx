@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { useTheme } from 'next-themes'
+import { Button } from '@/components/ui/button';
+import { useTheme } from 'next-themes';
 
 export default function Page() {
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
   return (
     <div>
       <h1 className="text-2xl font-semibold">Settings</h1>
@@ -80,5 +80,5 @@ export default function Page() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

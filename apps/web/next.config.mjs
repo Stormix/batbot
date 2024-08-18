@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.discordapp.com'
+      }
+    ]
   },
-  "output": "standalone"
+  reactStrictMode: false,
+  output: 'standalone'
 };
 
 export default nextConfig;
