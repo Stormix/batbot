@@ -1,3 +1,4 @@
+import { Maybe } from '@/types/generics';
 import { useTransition } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
@@ -8,7 +9,7 @@ export interface UseServerActionOptions<R = unknown> {
 
 const useServerAction = <T extends FieldValues, R = unknown>(
   form: UseFormReturn<T>,
-  action: (values: T) => Promise<{ error?: string } & R>,
+  action: (values: T) => Promise<{ error?: Maybe<unknown> } & R>,
   options: UseServerActionOptions<R> = {}
 ) => {
   const { onSuccess, onError } = options;
@@ -17,7 +18,7 @@ const useServerAction = <T extends FieldValues, R = unknown>(
     startTransition(async () => {
       const response = await action(values);
       if (response.error && onError) {
-        onError(response.error);
+        onError(response.error as string);
         return;
       }
       if (!response.error) {
