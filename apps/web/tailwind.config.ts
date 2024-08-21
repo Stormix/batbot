@@ -46,7 +46,9 @@ module.exports = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
-        }
+        },
+        discord: '#7289da',
+        twitch: '#6441a5'
       },
       borderRadius: {
         lg: `var(--radius)`,

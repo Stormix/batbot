@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils/styles';
-import { Platform } from '@/types/bot';
+import { Platform } from '@batbot/types';
 import { BiLogoYoutube } from 'react-icons/bi';
 import { SiDiscord, SiKick, SiTwitch } from 'react-icons/si';
 

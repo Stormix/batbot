@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth/utils';
 import { db } from '@/lib/db';
 import { env } from '@/lib/env.mjs';
 import { handleError } from '@/lib/errors';
-import { queue } from '@batbot/core';
+import { MessageType, Queue, RabbitMQConnection } from '@batbot/core';
 import { BotConfiguration } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
@@ -34,9 +34,9 @@ export async function upsert(newCommand: Configuration) {
       update: configuration
     });
 
-    const mqConnection = new queue.RabbitMQConnection(env.RABBITMQ_URI);
-    await mqConnection.sendToQueue(queue.constants.Queue.BOT_QUEUE, {
-      type: queue.constants.MessageType.BOT_CONFIGURATION_UPDATED,
+    const mqConnection = new RabbitMQConnection(env.RABBITMQ_URI);
+    await mqConnection.sendToQueue(Queue.BOT_QUEUE, {
+      type: MessageType.BOT_CONFIGURATION_UPDATED,
       payload: {
         userId: session.user.id,
         id: newConfiguration.id

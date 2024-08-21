@@ -32,7 +32,7 @@ abstract class BuiltinCommand {
     this.logger = bot.logger.getSubLogger({ name: this.constructor.name });
     this.options = options ?? {
       enabled: true,
-      aliases: '[]',
+      aliases: [],
       cooldown: 0
     };
   }

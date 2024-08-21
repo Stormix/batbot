@@ -1,0 +1,16 @@
+{
+  "name": "@batbot/types",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "bun-plugin-isolated-decl": "^0.1.4",
+    "oxc-transform": "^0.24.3",
+    "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "pre:build": "bun prisma generate",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+  }
+}

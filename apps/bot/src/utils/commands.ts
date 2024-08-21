@@ -1,19 +1,21 @@
 import type BuiltinCommand from '@/lib/command';
 import type { Context } from '@/types/context';
+import type { BotCommand } from '@prisma/client';
 
-export const checkCommandFlags = (command: BuiltinCommand, context: Context) => {
-  if (command?.ownerOnly && !context.adapter.isOwner(context.message)) {
-    return `${context.atAuthor} this command can only be used by ${context.atOwner}! Do it one more time and I'll ban you!`;
-  }
-  if (!command.enabled) return `${context.atAuthor} this command is disabled!`;
-  if (command?.ownerOnly && !context.adapter.isOwner(context.message)) {
-    return `${context.atAuthor} this command can only be used by ${context.atOwner}! Do it one more time and I'll ban you!`;
-  }
+export const checkCommandFlags = (command: BuiltinCommand | BotCommand, context: Context) => {
+  // TODO: Implement command flags
+  // if (command?.ownerOnly && !context.adapter.isOwner(context.message)) {
+  //   return `${context.atAuthor} this command can only be used by ${context.atOwner}! Do it one more time and I'll ban you!`;
+  // }
+  // if (!command.enabled) return `${context.atAuthor} this command is disabled!`;
+  // if (command?.ownerOnly && !context.adapter.isOwner(context.message)) {
+  //   return `${context.atAuthor} this command can only be used by ${context.atOwner}! Do it one more time and I'll ban you!`;
+  // }
 
   return null;
 };
 
-export const checkCommandCooldown = async (command: BuiltinCommand, context: Context) => {
+export const checkCommandCooldown = async (command: BuiltinCommand | BotCommand, context: Context) => {
   // TODO: Implement cooldowns
   // if (!command.cooldown) return null;
   // const hash = `${context.adapter.name}:${context.atAuthor}:${command.name}`;

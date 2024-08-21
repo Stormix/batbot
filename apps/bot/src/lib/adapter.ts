@@ -1,33 +1,30 @@
 import type { Bot } from '@/bot';
+import type { Context as AnyContext } from '@/types/context';
+import { Platform } from '@batbot/types';
 import type Logger from './logger';
-
-export enum Adapters {
-  Kick = 'kick',
-  Twitch = 'twitch'
-}
 
 export interface AdapterOptions {
   allowedEnvironments?: string[];
   enabled?: boolean;
 }
 
-abstract class Adapter<Context> {
+abstract class Adapter<Context = AnyContext> {
   readonly bot: Bot;
-  name: Adapters;
   logger: Logger;
   options: AdapterOptions;
+  platform: Platform;
 
   constructor(
     bot: Bot,
-    name: Adapters,
+    platform: Platform,
     options: AdapterOptions = {
       enabled: true
     }
   ) {
     this.bot = bot;
-    this.name = name;
     this.logger = this.bot.logger.getSubLogger({ name: this.name });
     this.options = options;
+    this.platform = platform;
   }
 
   abstract getClient(): unknown;
@@ -42,6 +39,8 @@ abstract class Adapter<Context> {
 
   abstract isOwner(message: unknown): boolean;
   abstract stop(): Promise<void>;
+
+  abstract storeMessage(context: Context): Promise<void>;
 }
 
 export default Adapter;

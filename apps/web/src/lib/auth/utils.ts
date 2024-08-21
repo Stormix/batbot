@@ -4,6 +4,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { DefaultSession, getServerSession, NextAuthOptions } from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 import DiscordProvider from 'next-auth/providers/discord';
+import TwitchProvider from 'next-auth/providers/twitch';
 import { redirect } from 'next/navigation';
 
 declare module 'next-auth' {
@@ -35,9 +36,18 @@ export const authOptions: NextAuthOptions = {
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET
+      clientSecret: env.DISCORD_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true
+    }),
+    TwitchProvider({
+      clientId: env.TWITCH_CLIENT_ID,
+      clientSecret: env.TWITCH_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true
     })
-  ]
+  ],
+  pages: {
+    signIn: '/signin'
+  }
 };
 
 export const getUserAuth = async () => {
@@ -47,5 +57,5 @@ export const getUserAuth = async () => {
 
 export const checkAuth = async () => {
   const { session } = await getUserAuth();
-  if (!session) redirect('/api/auth/signin');
+  if (!session) redirect('/signin');
 };

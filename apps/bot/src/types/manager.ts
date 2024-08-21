@@ -1,4 +1,5 @@
 export enum ManagerMode {
   PROCESS = 'process',
-  WORKER = 'worker'
+  WORKER = 'worker',
+  STANDALONE = 'standalone'
 }

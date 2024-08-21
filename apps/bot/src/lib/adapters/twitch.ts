@@ -1,16 +1,18 @@
 import type { Bot } from '@/bot';
+import { db } from '@/db';
 import env from '@/env';
 import type { Context, TwitchContext } from '@/types/context';
+import { Platform } from '@batbot/types';
 import type { BaseMessage, PrivateMessage } from 'twitch-js';
 import { Chat, ChatEvents, Commands } from 'twitch-js';
 import fetchUtil from 'twitch-js/lib/utils/fetch';
-import Adapter, { Adapters } from '../adapter';
+import Adapter from '../adapter';
 
 export default class TwitchAdapter extends Adapter<TwitchContext> {
   client: Chat | null = null;
 
   constructor(bot: Bot) {
-    super(bot, Adapters.Twitch);
+    super(bot, Platform.Twitch);
   }
 
   atAuthor(message: PrivateMessage | BaseMessage) {
@@ -81,10 +83,13 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
     this.client?.on(ChatEvents.ALL, async (message) => {
       if (!message) return;
       if (message.command !== Commands.PRIVATE_MESSAGE) return;
+      this.storeMessage(this.createContext(message as PrivateMessage));
       if (!message.message.startsWith(this.bot.config.commandPrefix)) return;
       const args = message.message.slice(this.bot.config.commandPrefix.length).trim().split(/ +/);
       const command = args.shift()?.toLowerCase();
       if (!command) return;
+
+
       await this.bot.processor.run(command, args, this.createContext(message as PrivateMessage));
     });
   }
@@ -97,13 +102,25 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
     });
 
     await this.listenForCommands();
-
     await this.client.connect();
-    await Promise.all([env.TWITCH_CHANNEL].map((channel) => this.client?.join(channel)));
+
+    await Promise.all(['skinnny', 'stormix_dev'].map((channel) => this.client?.join(channel)));
   }
 
   async stop() {
     if (!this.client) throw new Error('Twitch client is not initialized!');
     await this.client.disconnect();
+  }
+
+  async storeMessage(context: TwitchContext): Promise<void> {
+    await db.chatMessage.create({
+      data: {
+        message: context.message.message,
+        username: context.message.username,
+        userId: this.bot.config.userId,
+        platform: this.platform,
+        timestamp: context.message.timestamp
+      }
+    });
   }
 }

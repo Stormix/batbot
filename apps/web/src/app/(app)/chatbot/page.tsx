@@ -2,7 +2,6 @@ import PageBreadcrumbs from '@/components/molecules/page-breadcrumbs';
 import BotConfiguration from '@/components/organisms/bot-configuration';
 import { getUserAuth } from '@/lib/auth/utils';
 import { db } from '@/lib/db';
-import { test } from '@batbot/core';
 export default async function ChatBot() {
   const { session } = await getUserAuth();
   const botConfiguration = await db.botConfiguration.findUnique({
@@ -10,8 +9,6 @@ export default async function ChatBot() {
       userId: session!.user.id
     }
   });
-
-  test();
 
   return (
     <main className="flex flex-col gap-2">

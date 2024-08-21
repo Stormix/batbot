@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils/styles';
+
 const Icon = ({ className }: { className?: string }) => {
   return (
     <svg
@@ -82,13 +84,19 @@ const TextLogo = ({ className }: { className?: string }) => {
   );
 };
 
-const Logo = ({ className, variant = 'default' }: { variant: 'default' | 'withText' | 'text'; className?: string }) => {
+const Logo = ({
+  className,
+  variant = 'default'
+}: {
+  variant?: 'default' | 'withText' | 'text';
+  className?: string;
+}) => {
   switch (variant) {
     case 'default':
       return <Icon className={className} />;
     case 'withText':
       return (
-        <div className="flex gap-2 items-center">
+        <div className={cn('flex gap-2 items-center', className)}>
           <Icon className={className} />
           <TextLogo className={className} />
         </div>

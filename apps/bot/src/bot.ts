@@ -1,3 +1,5 @@
+import "@/instrument";
+
 import type { BotConfiguration } from '@prisma/client';
 import type { Context } from 'vm';
 import type Adapter from './lib/adapter';
@@ -115,4 +117,6 @@ const main = async () => {
   await bot.listen();
 };
 
-main();
+// main().catch((error) => {
+//   console.error('Error starting bot:', error);
+// });

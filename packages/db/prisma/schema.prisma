@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["tracing"]
 }
 
 datasource db {
@@ -42,8 +43,10 @@ model User {
   image            String?
   accounts         Account[]
   sessions         Session[]
+  
   BotConfiguration BotConfiguration[]
   BotCommand       BotCommand[]
+  ChatMessage ChatMessage[]
 }
 
 model VerificationToken {
@@ -85,7 +88,18 @@ model BotCommand {
 model ChatMessage {
   id        String  @id @default(dbgenerated("prefix_uuid('chat_message_'::text)"))
   userId    String
+  username  String
   message   String
   platform  String
   timestamp DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BotCommandRuns {
+  id        String  @id @default(dbgenerated("prefix_uuid('bot_command_runs_'::text)"))
+  command   String
+  platform  String
+  timestamp DateTime
+  userId    String
 }

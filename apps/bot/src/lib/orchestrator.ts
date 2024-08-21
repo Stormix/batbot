@@ -1,7 +1,7 @@
 import { db } from '@/db';
 import env from '@/env';
 import { ManagerMode } from '@/types/manager';
-import { queue } from '@batbot/core';
+import { MessageType, Queue, RabbitMQConnection } from '@batbot/core';
 import server from 'bunrest';
 import { join } from 'path';
 import { Base } from './base';
@@ -11,13 +11,13 @@ class Orchestrator extends Base {
   private _server: ReturnType<typeof server>;
   private _manager: BotManager;
 
-  readonly connection: queue.RabbitMQConnection;
+  readonly connection: RabbitMQConnection;
 
   constructor() {
     super();
     this._server = server();
     this._manager = new BotManager(join(__dirname, '../bot.ts'), ManagerMode.PROCESS);
-    this.connection = new queue.RabbitMQConnection(env.RABBITMQ_URI);
+    this.connection = new RabbitMQConnection(env.RABBITMQ_URI);
   }
 
   async init() {
@@ -25,7 +25,6 @@ class Orchestrator extends Base {
     this._server.get('/health', (req, res) => {
       res.json({ status: 'ok' });
     });
-
     this._server.get('/stats', async (req, res) => {
       res.json(await this._manager.stats());
     });
@@ -43,10 +42,10 @@ class Orchestrator extends Base {
   }
 
   async poll() {
-    await this.connection.consume(queue.constants.Queue.BOT_QUEUE, async (message) => {
+    await this.connection.consume(Queue.BOT_QUEUE, async (message) => {
       console.log('Received message:', message);
       switch (message.type) {
-        case queue.constants.MessageType.BOT_CONFIGURATION_UPDATED:
+        case MessageType.BOT_CONFIGURATION_UPDATED:
           // TODO: respawn bot
           this._manager.respawn(message.payload.id);
           break;

@@ -1,7 +1,7 @@
 import client, { type Channel, type Connection } from 'amqplib';
 import type { Message, MessageType, Queue } from './constants';
 
-export default class RabbitMQConnection {
+export class RabbitMQConnection {
   connection: Connection | null;
   channel: Channel | null;
 

@@ -7,8 +7,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
 import useServerAction from '@/hooks/useServerAction';
-import { Platform } from '@/types/bot';
 import { Maybe } from '@/types/generics';
+import { Platform } from '@batbot/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BotConfiguration } from '@prisma/client';
 import { useForm } from 'react-hook-form';

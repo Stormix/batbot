@@ -1,7 +1,7 @@
 import { AuthSession, getUserAuth } from '@/lib/auth/utils';
-import { LogOutIcon } from 'lucide-react';
 import Link from 'next/link';
 import Logo from './logo';
+import SignOutBtn from './molecules/sign-out';
 import SidebarItems, { AdditionalSidebarItems } from './SidebarItems';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { Separator } from './ui/separator';
@@ -52,9 +52,7 @@ const UserCard = ({ session }: { session: AuthSession }) => {
           </Avatar>
           <div className="capitalize">{user.name ?? 'John Doe'}</div>
         </div>
-        <div className="rounded-full p-2">
-          <LogOutIcon className="h-4 w-4" />
-        </div>
+        <SignOutBtn />
       </div>
     </Link>
   );

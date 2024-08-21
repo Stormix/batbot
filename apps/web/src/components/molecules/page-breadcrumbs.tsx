@@ -5,6 +5,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { Fragment } from 'react';
 
 interface PageBreadcrumbsProps {
   path: string[];
@@ -18,12 +19,12 @@ const PageBreadcrumbs = ({ path }: PageBreadcrumbsProps) => {
         <BreadcrumbLink href={`/`}>Home</BreadcrumbLink>
         <BreadcrumbSeparator />
         {path.map((item, index) => (
-          <>
-            <BreadcrumbLink key={index} className="capitalize" href={`/${item}`}>
+          <Fragment  key={index}>
+            <BreadcrumbLink className="capitalize" href={`/${item}`}>
               {index === path.length - 1 ? <BreadcrumbPage>{item}</BreadcrumbPage> : item}
             </BreadcrumbLink>
             {index < path.length - 1 && <BreadcrumbSeparator />}
-          </>
+          </Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>

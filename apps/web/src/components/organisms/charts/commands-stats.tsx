@@ -2,14 +2,21 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { format } from 'date-fns';
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
 
-const chartData = [
-  { command: '!about', messages: 186 },
-  { command: '!kick', messages: 214 },
-  { command: '!mic', messages: 214 },
-  { command: '!specs', messages: 514 }
-];
+interface CommandStats {
+  command: string;
+  messages: number;
+}
+
+interface CommandsStatsProps {
+  stats: CommandStats[];
+  range: {
+    startDate: string;
+    endDate: string;
+  };
+}
 
 const chartConfig = {
   messages: {
@@ -18,16 +25,18 @@ const chartConfig = {
   }
 } satisfies ChartConfig;
 
-const CommandsStats = () => {
+const CommandsStats = ({stats, range}: CommandsStatsProps) => {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Popular commands</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>
+          {format(range.startDate, 'MMMM yyyy')} - {format(range.endDate, 'MMMM yyyy')}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData} layout="vertical">
+          <BarChart accessibilityLayer data={stats} layout="vertical">
             <CartesianGrid horizontal={false} />
             <YAxis
               dataKey="command"
@@ -39,7 +48,7 @@ const CommandsStats = () => {
               hide
             />
             <XAxis dataKey="messages" type="number" hide />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />}  />
             <Bar dataKey="messages" layout="vertical" fill="var(--color-messages)" radius={4}>
               <LabelList
                 dataKey="command"

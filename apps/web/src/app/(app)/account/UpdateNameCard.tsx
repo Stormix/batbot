@@ -1,10 +1,11 @@
 'use client';
-import { AccountCard, AccountCardFooter, AccountCardBody } from './AccountCard';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
-import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import { toast } from 'sonner';
+import { AccountCard, AccountCardBody, AccountCardFooter } from './AccountCard';
 
 export default function UpdateNameCard({ name }: { name: string }) {
   const [isPending, startTransition] = useTransition();
@@ -33,7 +34,7 @@ export default function UpdateNameCard({ name }: { name: string }) {
   return (
     <AccountCard
       params={{
-        header: 'Your Name',
+        header: 'Display Name',
         description: 'Please enter your full name, or a display name you are comfortable with.'
       }}
     >

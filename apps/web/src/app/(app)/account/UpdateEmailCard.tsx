@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
@@ -33,7 +35,7 @@ export default function UpdateEmailCard({ email }: { email: string }) {
   return (
     <AccountCard
       params={{
-        header: 'Your Email',
+        header: 'Email',
         description: 'Please enter the email address you want to use with your account.'
       }}
     >

@@ -15,6 +15,8 @@ export const env = createEnv({
     ),
     DISCORD_CLIENT_ID: z.string().min(1),
     DISCORD_CLIENT_SECRET: z.string().min(1),
+    TWITCH_CLIENT_ID: z.string().min(1),
+    TWITCH_CLIENT_SECRET: z.string().min(1),
     RABBITMQ_URI: z.string().min(1)
   },
   client: {

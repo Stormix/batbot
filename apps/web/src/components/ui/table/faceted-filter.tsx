@@ -21,6 +21,7 @@ import { Button } from '../button';
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
   title?: string;
+  icon?: React.ComponentType<{ className?: string }>;
   options: {
     label: string;
     value: string;
@@ -31,15 +32,17 @@ interface DataTableFacetedFilterProps<TData, TValue> {
 export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,
+  icon,
   options
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
+  const Icon = icon ?? UserCircle;
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed py-1">
-          <UserCircle className="mr-2 h-4 w-4" />
+          <Icon className="mr-2 h-4 w-4" />
           {title}
           {selectedValues?.size > 0 && (
             <>

@@ -1,16 +1,18 @@
 import type { Bot } from '@/bot';
+import { db } from '@/db';
 import env from '@/env';
 import type { KickContext } from '@/types/context';
 import type { KickMessage, RawKickMessage } from '@/types/kick';
+import { Platform } from '@batbot/types';
 import type { Context } from 'vm';
-import Adapter, { Adapters } from '../adapter';
+import Adapter from '../adapter';
 import { KickClient } from '../kick/client';
 
 export default class KickAdapter extends Adapter<KickContext> {
   client: KickClient | null = null;
 
   constructor(bot: Bot) {
-    super(bot, Adapters.Kick);
+    super(bot, Platform.Kick);
   }
 
   atAuthor(message: KickMessage) {
@@ -78,5 +80,17 @@ export default class KickAdapter extends Adapter<KickContext> {
   async stop() {
     if (!this.client) throw new Error('Kick client is not initialized!');
     this.client.destroy();
+  }
+
+  async storeMessage(context: KickContext): Promise<void> {
+    await db.chatMessage.create({
+      data: {
+        message: context.message.content,
+        username: context.message.sender.username,
+        userId: this.bot.config.userId,
+        platform: this.platform,
+        timestamp: context.message.created_at
+      }
+    });
   }
 }
