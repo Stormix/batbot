@@ -13,8 +13,8 @@ interface CommandStats {
 interface CommandsStatsProps {
   stats: CommandStats[];
   range: {
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
   };
 }
 
@@ -25,7 +25,7 @@ const chartConfig = {
   }
 } satisfies ChartConfig;
 
-const CommandsStats = ({stats, range}: CommandsStatsProps) => {
+const CommandsStats = ({ stats, range }: CommandsStatsProps) => {
   return (
     <Card>
       <CardHeader>
@@ -48,7 +48,7 @@ const CommandsStats = ({stats, range}: CommandsStatsProps) => {
               hide
             />
             <XAxis dataKey="messages" type="number" hide />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />}  />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
             <Bar dataKey="messages" layout="vertical" fill="var(--color-messages)" radius={4}>
               <LabelList
                 dataKey="command"

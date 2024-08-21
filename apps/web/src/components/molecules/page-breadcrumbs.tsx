@@ -19,7 +19,7 @@ const PageBreadcrumbs = ({ path }: PageBreadcrumbsProps) => {
         <BreadcrumbLink href={`/`}>Home</BreadcrumbLink>
         <BreadcrumbSeparator />
         {path.map((item, index) => (
-          <Fragment  key={index}>
+          <Fragment key={index}>
             <BreadcrumbLink className="capitalize" href={`/${item}`}>
               {index === path.length - 1 ? <BreadcrumbPage>{item}</BreadcrumbPage> : item}
             </BreadcrumbLink>

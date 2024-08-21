@@ -11,10 +11,10 @@ interface PlatformStat {
   messages: number;
 }
 interface PlatformStatsProps {
-  stats: PlatformStat[]
+  stats: PlatformStat[];
   range: {
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
   };
 }
 
@@ -34,12 +34,12 @@ const chartConfig = {
 } as Record<Platform, { label: string; color: string }>;
 
 const PlatformStats = ({ stats, range }: PlatformStatsProps) => {
-  const chartData = stats.map(stat => ({
-    ...stat,
-    fill: chartConfig[stat.platform]?.color
-  })).sort(
-    (a, b) => b.messages - a.messages
-  );
+  const chartData = stats
+    .map((stat) => ({
+      ...stat,
+      fill: chartConfig[stat.platform]?.color
+    }))
+    .sort((a, b) => b.messages - a.messages);
 
   return (
     <Card>

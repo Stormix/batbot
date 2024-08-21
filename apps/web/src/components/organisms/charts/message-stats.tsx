@@ -6,7 +6,6 @@ import { format } from 'date-fns';
 import { useMemo, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
-
 interface MessageStatsProps {
   className?: string;
   stats: Array<{
@@ -14,8 +13,8 @@ interface MessageStatsProps {
     messages: number;
   }>;
   range: {
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
   };
 }
 
@@ -26,10 +25,9 @@ const chartConfig = {
   }
 } satisfies ChartConfig;
 
-
 const MessageStats = ({ className, stats, range }: MessageStatsProps) => {
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('messages');
-  const total = useMemo(() => stats.reduce((acc, curr) => acc +  curr.messages , 0), []);
+  const total = useMemo(() => stats.reduce((acc, curr) => acc + curr.messages, 0), []);
 
   return (
     <Card className={className}>
@@ -37,7 +35,8 @@ const MessageStats = ({ className, stats, range }: MessageStatsProps) => {
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Messages</CardTitle>
           <CardDescription>
-            Showing messages from the last 3 months ({format(range.startDate, 'MMMM yyyy')} - {format(range.endDate, 'MMMM yyyy')})
+            Showing messages from the last 3 months ({format(range.startDate, 'MMMM yyyy')} -{' '}
+            {format(range.endDate, 'MMMM yyyy')})
           </CardDescription>
         </div>
         <div className="flex">
@@ -76,11 +75,7 @@ const MessageStats = ({ className, stats, range }: MessageStatsProps) => {
             />
             <ChartTooltip
               content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="messages"
-                  labelFormatter={(value) =>  "Messages" }
-                />
+                <ChartTooltipContent className="w-[150px]" nameKey="messages" labelFormatter={(value) => 'Messages'} />
               }
             />
             <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
