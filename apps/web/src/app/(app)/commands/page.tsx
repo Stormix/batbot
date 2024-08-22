@@ -4,9 +4,9 @@ import AddCommandDialog from '@/components/organisms/add-command';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getUserAuth } from '@/lib/auth/utils';
-import { builtinCommands } from '@/lib/constants';
 import { db } from '@/lib/db';
 import { CommandCategory } from '@/types/bot';
+import { builtinCommands } from '@batbot/core';
 
 export default async function Home() {
   const { session } = await getUserAuth();

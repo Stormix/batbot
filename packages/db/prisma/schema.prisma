@@ -12,6 +12,7 @@ model Account {
   id                String  @id @default(dbgenerated("prefix_uuid('account_'::text)"))
   userId            String
   type              String
+  username          String?
   provider          String
   providerAccountId String
   refresh_token     String?

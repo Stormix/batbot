@@ -1,4 +1,4 @@
-import { Role } from '@/types/roles';
+import { Role } from '@batbot/types';
 import { z } from 'zod';
 
 export const newCommandSchema = z.object({

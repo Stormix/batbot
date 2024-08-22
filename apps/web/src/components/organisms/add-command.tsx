@@ -17,7 +17,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import useServerAction from '@/hooks/useServerAction';
-import { Role, RoleLabels } from '@/types/roles';
+import { Role, RoleLabels } from '@batbot/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';

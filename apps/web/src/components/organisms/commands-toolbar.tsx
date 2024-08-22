@@ -1,6 +1,6 @@
 'use client';
 
-import { Role, RoleLabels } from '@/types/roles';
+import { Role, RoleLabels } from '@batbot/types';
 import { Table } from '@tanstack/react-table';
 import { RxCross2 } from 'react-icons/rx';
 import { Button } from '../ui/button';

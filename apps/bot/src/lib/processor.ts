@@ -24,7 +24,7 @@ export default class Processor extends Base {
   }
 
   async load() {
-    const commands = await loadModulesInDirectory<BuiltinCommand>('commands');
+    const commands = await loadModulesInDirectory<BuiltinCommand>('lib/commands');
     for (const Command of commands) {
       this.register(new Command(this.bot));
     }
@@ -50,18 +50,17 @@ export default class Processor extends Base {
             command: keyword,
             userId: this.bot.config.userId,
             platform: context.adapter.platform,
-            timestamp: new Date(),
+            timestamp: new Date()
           }
         });
-        
+
         let error = checkCommandFlags(commandInstance, context);
         if (error) return context.adapter.send(error, context);
         error = await checkCommandCooldown(commandInstance, context);
         if (error) return context.adapter.send(error, context);
-        
+
         return commandInstance.run(context, args);
       }
-
 
       this.logger.debug(`Running custom command ${keyword} from ${context.atAuthor}!`);
 
@@ -71,11 +70,11 @@ export default class Processor extends Base {
           command: keyword,
           userId: this.bot.config.userId
         }
-      }); 
+      });
 
-      if (!botCommand){
+      if (!botCommand) {
         this.logger.debug(`Command ${keyword} not found!`);
-        return 
+        return;
       }
 
       // Store command usage (TODO: refactor)
@@ -84,10 +83,9 @@ export default class Processor extends Base {
           command: keyword,
           userId: this.bot.config.userId,
           platform: context.adapter.platform,
-          timestamp: new Date(),
+          timestamp: new Date()
         }
       });
-      
 
       // Check for user level
       let error = checkCommandFlags(botCommand, context);

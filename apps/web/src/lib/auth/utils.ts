@@ -47,6 +47,24 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: '/signin'
+  },
+  events: {
+    async linkAccount({ user, account, profile }) {
+      if (profile.name) {
+        // Store the linked account username in the database
+        await db.account.update({
+          where: {
+            provider_providerAccountId: {
+              provider: account.provider,
+              providerAccountId: account.providerAccountId
+            }
+          },
+          data: {
+            username: profile.name
+          }
+        });
+      }
+    }
   }
 };
 

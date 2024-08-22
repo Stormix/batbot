@@ -1,12 +1,13 @@
-import "@/instrument";
+import '@/instrument';
 
+import type { Platform } from '@batbot/types';
 import type { BotConfiguration } from '@prisma/client';
-import type { Context } from 'vm';
-import type Adapter from './lib/adapter';
+import Adapter from './lib/adapter';
 import KickAdapter from './lib/adapters/kick';
 import TwitchAdapter from './lib/adapters/twitch';
 import { Base } from './lib/base';
 import Processor from './lib/processor';
+import type { Context } from './types/context';
 import { ManagerMode } from './types/manager';
 import { parseBotArgs } from './utils/cli';
 
@@ -16,15 +17,17 @@ export class Bot extends Base {
   readonly config: BotConfiguration;
   readonly processor: Processor;
   readonly mode: ManagerMode;
+  readonly channels: Partial<Record<Platform, string>> = {};
 
   adapters: Adapter<Context>[] = [];
 
-  constructor(config: BotConfiguration, mode: ManagerMode) {
+  constructor(config: BotConfiguration, channels: Partial<Record<Platform, string>>, mode: ManagerMode) {
     super();
 
     this.config = config;
     this.processor = new Processor(this);
     this.mode = mode;
+    this.channels = channels;
   }
 
   get prefix() {
@@ -32,9 +35,12 @@ export class Bot extends Base {
   }
 
   async load_adapters() {
-    // Load adapters
-    this.logger.info('Loading adapters...');
-    this.adapters = [new TwitchAdapter(this), new KickAdapter(this)];
+    const enabledAdapters = Object.keys(this.channels).filter((channel) => this.channels[channel as Platform]);
+    this.logger.info('Loading adapters: ', enabledAdapters);
+
+    this.adapters = [new TwitchAdapter(this), new KickAdapter(this)].filter((adapter) =>
+      enabledAdapters.includes(adapter.platform)
+    );
 
     // Setup adapters
     for (const adapter of this.adapters) {
@@ -111,10 +117,10 @@ export class Bot extends Base {
 
 const main = async () => {
   const { mode, config } = parseBotArgs(Bun.argv);
-  const bot = new Bot(config, mode as ManagerMode);
+  // const bot = new Bot(config, mode as ManagerMode);
 
-  await bot.setup();
-  await bot.listen();
+  // await bot.setup();
+  // await bot.listen();
 };
 
 // main().catch((error) => {

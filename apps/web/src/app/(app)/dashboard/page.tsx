@@ -36,7 +36,7 @@ const Dashboard = async () => {
       GROUP BY 
         DATE("timestamp")
       ORDER BY 
-        date DESC;
+        date ASC;
     `) satisfies Array<{
     date: string;
     messages: number;

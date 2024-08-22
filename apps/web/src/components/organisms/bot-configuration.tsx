@@ -20,7 +20,13 @@ import Code from '../ui/code';
 import { Input } from '../ui/input';
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group';
 
-const BotConfigurationForm = ({ initialValues }: { initialValues: Maybe<BotConfiguration> }) => {
+const BotConfigurationForm = ({
+  initialValues,
+  platforms
+}: {
+  initialValues: Maybe<BotConfiguration>;
+  platforms: string[];
+}) => {
   const form = useForm<Configuration>({
     resolver: zodResolver(configurationSchema),
     defaultValues: initialValues
@@ -100,9 +106,9 @@ const BotConfigurationForm = ({ initialValues }: { initialValues: Maybe<BotConfi
                       onValueChange={field.onChange}
                       value={field.value}
                     >
-                      {Object.values(Platform).map((platform) => (
+                      {platforms.map((platform) => (
                         <ToggleGroupItem key={platform} value={platform}>
-                          <PlatformIcon platform={platform} />
+                          <PlatformIcon platform={platform as Platform} />
                         </ToggleGroupItem>
                       ))}
                     </ToggleGroup>

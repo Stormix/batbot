@@ -10,9 +10,11 @@ import { KickClient } from '../kick/client';
 
 export default class KickAdapter extends Adapter<KickContext> {
   client: KickClient | null = null;
+  channels: string[] = [];
 
-  constructor(bot: Bot) {
+  constructor(bot: Bot, channels: string[] = []) {
     super(bot, Platform.Kick);
+    this.channels = channels;
   }
 
   atAuthor(message: KickMessage) {

@@ -10,9 +10,11 @@ import Adapter from '../adapter';
 
 export default class TwitchAdapter extends Adapter<TwitchContext> {
   client: Chat | null = null;
+  channels: string[] = [];
 
-  constructor(bot: Bot) {
+  constructor(bot: Bot, channels: string[] = []) {
     super(bot, Platform.Twitch);
+    this.channels = channels;
   }
 
   atAuthor(message: PrivateMessage | BaseMessage) {
@@ -89,7 +91,6 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
       const command = args.shift()?.toLowerCase();
       if (!command) return;
 
-
       await this.bot.processor.run(command, args, this.createContext(message as PrivateMessage));
     });
   }
@@ -104,7 +105,7 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
     await this.listenForCommands();
     await this.client.connect();
 
-    await Promise.all(['skinnny', 'stormix_dev'].map((channel) => this.client?.join(channel)));
+    await Promise.all([...this.channels, 'kaicenat'].map((channel) => this.client?.join(channel)));
   }
 
   async stop() {

@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { DataTableColumnHeader } from '@/components/ui/table/column-header';
 import { Maybe } from '@/types/generics';
-import { Role, RoleLabels } from '@/types/roles';
+import { Role, RoleLabels } from '@batbot/types';
 import { BotConfiguration } from '@prisma/client';
 
 export const columns: (configuration: Maybe<BotConfiguration>) => ColumnDef<Command>[] = (configuration) => [
