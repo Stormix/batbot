@@ -1,4 +1,5 @@
 import { Account } from '@prisma/client';
+import { Maybe } from './generics';
 
 export interface StreamElementsProfile {
   profile: {
@@ -58,5 +59,5 @@ export interface NightBotCommand {
 
 export interface ImportPayload {
   username?: string;
-  account?: Account;
+  account?: Maybe<Account>;
 }
