@@ -47,6 +47,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
+        khnouni: {
+          DEFAULT: 'hsl(var(--khnouni))',
+          foreground: 'hsl(var(--khnouni-foreground))'
+        },
         discord: '#7289da',
         twitch: '#6441a5'
       },

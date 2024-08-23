@@ -10,10 +10,13 @@ import { columns } from './columns';
 interface CommandsTableProps {
   commands: Command[];
   configuration: Maybe<BotConfiguration>;
+  noToolbar?: boolean;
 }
 
-const CommandsTable = ({ commands, configuration }: CommandsTableProps) => {
-  return <DataTable columns={columns(configuration)} data={commands} Toolbar={CommandsToolbar} />;
+const CommandsTable = ({ commands, configuration, noToolbar = false }: CommandsTableProps) => {
+  return (
+    <DataTable columns={columns(configuration)} data={commands} Toolbar={noToolbar ? undefined : CommandsToolbar} />
+  );
 };
 
 export default CommandsTable;

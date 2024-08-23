@@ -38,11 +38,13 @@
     "@sentry/nextjs": "8",
     "@t3-oss/env-nextjs": "^0.11.0",
     "@tanstack/react-table": "^8.20.1",
+    "axios": "^1.7.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
     "crypto-browserify": "^3.12.0",
     "date-fns": "^3.6.0",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.428.0",
     "next": "^14.2.6",
     "next-auth": "^4.24.7",
@@ -59,6 +61,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -6,6 +6,7 @@ import { Adapter } from 'next-auth/adapters';
 import DiscordProvider from 'next-auth/providers/discord';
 import TwitchProvider from 'next-auth/providers/twitch';
 import { redirect } from 'next/navigation';
+import NightbotProvider from './Nightbot';
 
 declare module 'next-auth' {
   interface Session {
@@ -42,6 +43,11 @@ export const authOptions: NextAuthOptions = {
     TwitchProvider({
       clientId: env.TWITCH_CLIENT_ID,
       clientSecret: env.TWITCH_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true
+    }),
+    NightbotProvider({
+      clientId: env.NIGHTBOT_CLIENT_ID,
+      clientSecret: env.NIGHTBOT_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true
     })
   ],

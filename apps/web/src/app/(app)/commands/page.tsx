@@ -14,8 +14,7 @@ export default async function Home() {
   const commands = await db.botCommand.findMany({
     where: {
       userId: session!.user.id
-    },
-    take: 100
+    }
   });
 
   const configuration = await db.botConfiguration.findUnique({

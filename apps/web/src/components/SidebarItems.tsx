@@ -6,11 +6,13 @@ import { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IconType } from 'react-icons/lib';
+import { Badge } from './ui/badge';
 
 export interface SidebarLink {
   title: string;
   href: string;
   icon: LucideIcon | IconType;
+  badge?: string;
 }
 
 const SidebarItems = () => {
@@ -70,6 +72,7 @@ const SidebarLink = ({ link, active }: { link: SidebarLink; active: boolean }) =
         />
         <link.icon className="h-5" />
         <span>{link.title}</span>
+        {link.badge && <Badge variant={'accent'}>{link.badge}</Badge>}
       </div>
     </Link>
   );
