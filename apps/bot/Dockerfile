@@ -41,4 +41,4 @@ WORKDIR /usr/src/app/apps/bot
 
 EXPOSE 3001
 
-ENTRYPOINT [ "bun", "run", "src/main.ts" ]
+CMD [ "bun", "run", "./src/main.ts" ]
