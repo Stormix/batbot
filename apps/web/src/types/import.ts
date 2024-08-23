@@ -1,3 +1,5 @@
+import { Account } from '@prisma/client';
+
 export interface StreamElementsProfile {
   profile: {
     title: string;
