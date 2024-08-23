@@ -41,6 +41,4 @@ WORKDIR /usr/src/app/apps/bot
 
 EXPOSE 3001
 
-RUN ls -la
-
-ENTRYPOINT [ "bun", "run", "start" ]
+ENTRYPOINT [ "bun",  "dev" ]
