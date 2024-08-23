@@ -2,6 +2,7 @@ import '@/instrument';
 
 import type { Platform } from '@batbot/types';
 import type { BotConfiguration } from '@prisma/client';
+import { omit } from 'lodash';
 import Adapter from './lib/adapter';
 import KickAdapter from './lib/adapters/kick';
 import TwitchAdapter from './lib/adapters/twitch';
@@ -44,7 +45,9 @@ export class Bot extends Base {
 
     // Setup adapters
     for (const adapter of this.adapters) {
-      await adapter.setup();
+      const channels = [this.channels[adapter.platform]].filter(Boolean) as string[];
+      this.logger.debug(`Setting up adapter for ${adapter.platform} channel: ${channels}`);
+      await adapter.setup(channels);
     }
   }
 
@@ -96,17 +99,15 @@ export class Bot extends Base {
     this.logger.debug('Sending message to parent...');
     switch (this.mode) {
       case 'worker':
-        postMessage({
+        return postMessage({
           type,
           payload: payload
         });
-        break;
       case 'process':
-        process.send!({
+        return process.send!({
           type,
           payload: payload
         });
-        break;
     }
   }
 
@@ -117,12 +118,15 @@ export class Bot extends Base {
 
 const main = async () => {
   const { mode, config } = parseBotArgs(Bun.argv);
-  // const bot = new Bot(config, mode as ManagerMode);
 
-  // await bot.setup();
-  // await bot.listen();
+  const botConfiguration = omit(config, 'channels');
+  const channels = config.channels;
+  const bot = new Bot(botConfiguration, channels, mode as ManagerMode);
+
+  await bot.setup();
+  await bot.listen();
 };
 
-// main().catch((error) => {
-//   console.error('Error starting bot:', error);
-// });
+main().catch((error) => {
+  console.error('Error starting bot:', error);
+});

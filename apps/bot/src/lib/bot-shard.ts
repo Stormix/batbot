@@ -24,6 +24,7 @@ class BotShard extends BaseEmitter {
     }
 
     const argv = ['--mode', 'worker', '--config', JSON.stringify(this._config)];
+
     switch (this._manager.mode) {
       case ManagerMode.PROCESS:
         this._instance = Bun.spawn(['bun', this._manager.file, ...argv], {
@@ -36,7 +37,7 @@ class BotShard extends BaseEmitter {
             signalCode: number | null,
             error: ErrorLike | undefined
           ) => {
-            console.log('exit', exitCode, signalCode, error);
+            console.log('Bot exit:', exitCode, signalCode, error);
             this.handleExit(error as Error);
           }
         });

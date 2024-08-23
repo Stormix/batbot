@@ -28,7 +28,7 @@ abstract class Adapter<Context = AnyContext> {
   }
 
   abstract getClient(): unknown;
-  abstract setup(): Promise<void>;
+  abstract setup(channels: string[]): Promise<void>;
   abstract listen(): Promise<void>;
   abstract listenForCommands(): Promise<void>;
   abstract atAuthor(message: unknown): string;

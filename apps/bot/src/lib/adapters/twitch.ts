@@ -12,9 +12,8 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
   client: Chat | null = null;
   channels: string[] = [];
 
-  constructor(bot: Bot, channels: string[] = []) {
+  constructor(bot: Bot) {
     super(bot, Platform.Twitch);
-    this.channels = channels;
   }
 
   atAuthor(message: PrivateMessage | BaseMessage) {
@@ -51,7 +50,8 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
     await this.client.whisper((context as TwitchContext).message.username, message); // DOESN'T WORK
   }
 
-  async setup() {
+  async setup(channels: string[] = []) {
+    this.channels = channels;
     const botTokens = {
       access_token: env.TWITCH_ACCESS_TOKEN,
       refresh_token: env.TWITCH_REFRESH_TOKEN
@@ -105,7 +105,8 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
     await this.listenForCommands();
     await this.client.connect();
 
-    await Promise.all([...this.channels, 'kaicenat'].map((channel) => this.client?.join(channel)));
+    console.log('Channels:', this.channels);
+    await Promise.all([...this.channels].map((channel) => this.client?.join(channel)));
   }
 
   async stop() {

@@ -43,9 +43,7 @@ export async function upsert(newCommand: Configuration) {
       }
     });
 
-    await mqConnection.close();
-
-    revalidatePath('/commands');
+    revalidatePath('commands', 'layout');
 
     return {
       error: null,

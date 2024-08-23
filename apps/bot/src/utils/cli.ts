@@ -1,3 +1,5 @@
+import type { Platform } from '@batbot/types';
+import type { BotConfiguration } from '@prisma/client';
 import { parseArgs } from 'util';
 
 export const parseBotArgs = (args: string[]) => {
@@ -17,6 +19,8 @@ export const parseBotArgs = (args: string[]) => {
 
   return {
     mode: values.mode as string,
-    config: JSON.parse(values.config as string)
+    config: JSON.parse(values.config as string) as BotConfiguration & {
+      channels: Partial<Record<Platform, string>>;
+    }
   };
 };

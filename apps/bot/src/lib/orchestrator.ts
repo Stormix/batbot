@@ -1,8 +1,10 @@
-import { db } from '@/db';
 import env from '@/env';
 import { ManagerMode } from '@/types/manager';
+import { getConfigurations } from '@/utils/bot';
 import { MessageType, Queue, RabbitMQConnection } from '@batbot/core';
+import type { Platform } from '@batbot/types';
 import server from 'bunrest';
+import { omit } from 'lodash';
 import { join } from 'path';
 import { Base } from './base';
 import BotManager from './manager';
@@ -30,13 +32,27 @@ class Orchestrator extends Base {
     });
   }
 
+  async getConfigurations() {
+    const configuration = await getConfigurations();
+    return configuration.map((config) => ({
+      ...omit(config, 'user'),
+      channels: config.user?.accounts.reduce(
+        (acc, account) => {
+          if (account?.username && config.enabledPlatforms.includes(account.provider)) {
+            acc[account.provider as Platform] = account.username;
+          }
+          return acc;
+        },
+        {} as Record<Platform, string>
+      )
+    }));
+  }
+
   async listen() {
     await this.init();
-    const bots = await db?.botConfiguration.findMany({
-      where: { enabled: true }
-    });
-
-    await this._manager.spawn(bots ?? []);
+    const configurations = await this.getConfigurations();
+    console.log('Spawning bots:', configurations);
+    await this._manager.spawn(configurations ?? []);
     await this.poll();
     return this._server.listen(env.PORT);
   }

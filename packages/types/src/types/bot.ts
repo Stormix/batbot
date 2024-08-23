@@ -1,3 +1,5 @@
+import type { BotConfiguration } from '@prisma/client';
+
 export enum Platform {
   Twitch = 'twitch',
   Discord = 'discord',
@@ -21,4 +23,8 @@ export const RoleLabels = {
   [Role.Moderator]: 'Moderator',
   [Role.Editor]: 'Editor',
   [Role.Owner]: 'Owner'
+};
+
+export type BotConfigurationWithChannels = BotConfiguration & {
+  channels: Partial<Record<Platform, string>>;
 };
