@@ -8,4 +8,6 @@ const main = async () => {
   orchestrator.logger.info('Orchestrator is listening on port:', env.PORT);
 };
 
-main();
+main().catch((error) => {
+  console.error('Error starting the app:', error);
+});
