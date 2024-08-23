@@ -1,25 +1,21 @@
 import type { Platform } from '@batbot/types';
 import type { BotConfiguration } from '@prisma/client';
-import { parseArgs } from 'util';
 
 export const parseBotArgs = (args: string[]) => {
-  const { values, positionals } = parseArgs({
-    args: args,
-    options: {
-      mode: {
-        type: 'string'
-      },
-      config: {
-        type: 'string'
-      }
-    },
-    strict: true,
-    allowPositionals: true
+  let mode = '';
+  let config = '';
+
+  args.forEach((arg, index) => {
+    if (arg === '--mode') {
+      mode = args[index + 1];
+    } else if (arg === '--config') {
+      config = args[index + 1];
+    }
   });
 
   return {
-    mode: values.mode as string,
-    config: JSON.parse(values.config as string) as BotConfiguration & {
+    mode,
+    config: JSON.parse(config) as BotConfiguration & {
       channels: Partial<Record<Platform, string>>;
     }
   };
