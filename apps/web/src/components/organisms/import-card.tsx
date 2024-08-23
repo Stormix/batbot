@@ -152,7 +152,7 @@ const ImportCard = ({ provider, configuration, commands, requireAccount, provide
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="" {...field} readOnly={providerAccount?.username !== null} />
+                    <Input placeholder="" {...field} readOnly={requireAccount && providerAccount?.username !== null} />
                   </FormControl>
                   <FormDescription>
                     {!requireAccount && (

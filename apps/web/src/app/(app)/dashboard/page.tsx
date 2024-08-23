@@ -53,6 +53,12 @@ const Dashboard = async () => {
         gte: startDate,
         lte: endDate
       }
+    },
+    take: 5,
+    orderBy: {
+      _count: {
+        command: 'desc'
+      }
     }
   });
 

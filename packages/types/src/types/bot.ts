@@ -7,6 +7,8 @@ export enum Platform {
   Youtube = 'youtube'
 }
 
+export const NON_STREAMING_PLATFORMS = [Platform.Discord, 'nightbot'];
+
 export enum Role {
   User,
   Follower,
