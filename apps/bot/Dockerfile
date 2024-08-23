@@ -25,7 +25,7 @@ ENV RABBITMQ_URI=${RABBITMQ_URI}
 
 # Install nodejs using n
 RUN apt-get -y update; apt-get -y install curl
-ARG NODE_VERSION=18
+ARG NODE_VERSION=20.12.2
 RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n \
     && bash n $NODE_VERSION \
     && rm n \
