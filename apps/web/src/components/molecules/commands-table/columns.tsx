@@ -18,7 +18,12 @@ import { Maybe } from '@/types/generics';
 import { Role, RoleLabels } from '@batbot/types';
 import { BotConfiguration } from '@prisma/client';
 
-export const columns: (configuration: Maybe<BotConfiguration>) => ColumnDef<Command>[] = (configuration) => [
+export const columns: (
+  configuration: Maybe<BotConfiguration>,
+  options?: {
+    noActions?: boolean;
+  }
+) => ColumnDef<Command>[] = (configuration, options) => [
   {
     accessorKey: 'command',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Command" />,
@@ -48,24 +53,28 @@ export const columns: (configuration: Maybe<BotConfiguration>) => ColumnDef<Comm
     accessorKey: 'enabled',
     header: 'Enabled'
   },
-  {
-    id: 'actions',
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-400">Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    }
-  }
+  ...(options?.noActions
+    ? []
+    : [
+        {
+          id: 'actions',
+          cell: ({ row }) => {
+            return (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">Open menu</span>
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuItem>Edit</DropdownMenuItem>
+                  <DropdownMenuItem className="text-red-400">Delete</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            );
+          }
+        } satisfies ColumnDef<Command>
+      ])
 ];

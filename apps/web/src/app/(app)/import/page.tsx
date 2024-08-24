@@ -4,6 +4,11 @@ import { getUserAuth } from '@/lib/auth/utils';
 import { db } from '@/lib/db';
 import { ImportProvider } from '@/lib/import/constants';
 
+export const metadata = {
+  title: 'Import commands | Batbot',
+  description: 'Import commands from other chatbots (StreamElements, NightBot ...etc).'
+};
+
 const Import = async () => {
   const { session } = await getUserAuth();
   const botConfiguration = await db.botConfiguration.findUnique({

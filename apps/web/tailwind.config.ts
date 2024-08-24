@@ -52,7 +52,9 @@ module.exports = {
           foreground: 'hsl(var(--khnouni-foreground))'
         },
         discord: '#7289da',
-        twitch: '#6441a5'
+        twitch: '#6441a5',
+        kick: '#53FC18',
+        youtube: '#ff0000'
       },
       borderRadius: {
         lg: `var(--radius)`,

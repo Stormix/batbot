@@ -1,14 +1,23 @@
 import CommandsTable from '@/components/molecules/commands-table';
 import PageBreadcrumbs from '@/components/molecules/page-breadcrumbs';
 import AddCommandDialog from '@/components/organisms/add-command';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { getUserAuth } from '@/lib/auth/utils';
 import { db } from '@/lib/db';
 import { CommandCategory } from '@/types/bot';
 import { builtinCommands } from '@batbot/core';
+import Link from 'next/link';
+import { RxOpenInNewWindow } from 'react-icons/rx';
 
-export default async function Home() {
+export const metadata = {
+  title: 'Commands | Batbot',
+  description: 'Manage your chatbot commands.'
+};
+
+export default async function Commands() {
   const { session } = await getUserAuth();
 
   const commands = await db.botCommand.findMany({
@@ -56,7 +65,21 @@ export default async function Home() {
                   <CardTitle>Custom Commands</CardTitle>
                   <CardDescription>These are the commands that you have created.</CardDescription>
                 </div>
-                <AddCommandDialog />
+                <div className="flex items-center gap-2">
+                  <AddCommandDialog />
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link href={`/${session!.user.name}/commands`} target="_blank" rel="noopener noreferrer">
+                        <Button icon={<RxOpenInNewWindow />} variant="secondary" asChild>
+                          Commands Portal
+                        </Button>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      Share this with your viewers so they can see the commands you have created.
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               </CardHeader>
               <CardContent>
                 <CommandsTable

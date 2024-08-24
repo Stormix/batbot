@@ -48,6 +48,8 @@ model User {
   BotConfiguration BotConfiguration[]
   BotCommand       BotCommand[]
   ChatMessage ChatMessage[]
+
+  @@unique([name])
 }
 
 model VerificationToken {

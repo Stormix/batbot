@@ -1,6 +1,6 @@
 import { Platform } from '@batbot/types';
 
-export const platformLink = (username: string, platform: Platform) => {
+export const platformLink = (username: string, platform: Platform | string) => {
   switch (platform) {
     case Platform.Twitch:
       return `https://twitch.tv/${username}`;

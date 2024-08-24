@@ -3,6 +3,12 @@ import Logo from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Batbot - The most complete chatbot for your stream',
+  description:
+    'Batbot is a chat bot for Kick, Twitch, and YouTube that allows you to automate your live stream chat with moderation and entertainment features.'
+};
+
 const LandingPage = () => {
   return (
     <div className="flex flex-col min-h-screen">

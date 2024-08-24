@@ -1,6 +1,5 @@
 import { withSentryConfig } from '@sentry/nextjs';
 
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -8,6 +7,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.discordapp.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.assets.so'
       }
     ]
   },
@@ -16,12 +19,11 @@ const nextConfig = {
 };
 
 export default withSentryConfig(nextConfig, {
-
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
-  org: "stormix",
-  project: "batbot-web",
+  org: 'stormix',
+  project: 'batbot-web',
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -34,14 +36,14 @@ export default withSentryConfig(nextConfig, {
 
   // Automatically annotate React components to show their full name in breadcrumbs and session replay
   reactComponentAnnotation: {
-    enabled: true,
+    enabled: true
   },
 
   // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: "/monitoring",
+  tunnelRoute: '/monitoring',
 
   // Hides source maps from generated client bundles
   hideSourceMaps: false,
@@ -53,5 +55,5 @@ export default withSentryConfig(nextConfig, {
   // See the following for more information:
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
-  automaticVercelMonitors: false,
+  automaticVercelMonitors: false
 });

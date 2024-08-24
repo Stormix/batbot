@@ -34,10 +34,10 @@ const AddCommandDialog = () => {
   const form = useForm<NewCommand>({
     resolver: zodResolver(newCommandSchema),
     defaultValues: {
-      command: 'aaa',
-      response: 'bbb',
+      command: '',
+      response: '',
       cooldown: 5,
-      aliases: ['dd'],
+      aliases: [],
       minRole: Role.User,
       enabled: true
     }

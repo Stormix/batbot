@@ -7,6 +7,11 @@ import { db } from '@/lib/db';
 import { Platform } from '@batbot/types';
 import { sub } from 'date-fns';
 
+export const metadata = {
+  title: 'Dashboard | Batbot',
+  description: 'Chatbot analytics and insights for your stream.'
+};
+
 const Dashboard = async () => {
   const { session } = await getUserAuth();
   if (!session) {

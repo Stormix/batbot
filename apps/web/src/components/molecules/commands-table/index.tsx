@@ -11,11 +11,18 @@ interface CommandsTableProps {
   commands: Command[];
   configuration: Maybe<BotConfiguration>;
   noToolbar?: boolean;
+  noActions?: boolean;
 }
 
-const CommandsTable = ({ commands, configuration, noToolbar = false }: CommandsTableProps) => {
+const CommandsTable = ({ commands, configuration, noToolbar = false, noActions = true }: CommandsTableProps) => {
   return (
-    <DataTable columns={columns(configuration)} data={commands} Toolbar={noToolbar ? undefined : CommandsToolbar} />
+    <DataTable
+      columns={columns(configuration, {
+        noActions
+      })}
+      data={commands}
+      Toolbar={noToolbar ? undefined : CommandsToolbar}
+    />
   );
 };
 

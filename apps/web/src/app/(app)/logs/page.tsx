@@ -4,6 +4,11 @@ import { getUserAuth } from '@/lib/auth/utils';
 import { db } from '@/lib/db';
 import { subDays } from 'date-fns';
 
+export const metadata = {
+  title: 'Logs | Batbot',
+  description: 'View your chatbot logs.'
+};
+
 const Logs = async () => {
   const { session } = await getUserAuth();
 

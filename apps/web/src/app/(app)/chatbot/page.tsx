@@ -4,6 +4,11 @@ import { getUserAuth } from '@/lib/auth/utils';
 import { db } from '@/lib/db';
 import { NON_STREAMING_PLATFORMS } from '@batbot/types';
 
+export const metadata = {
+  title: 'Chatbot Settings | Batbot',
+  description: 'Configure your chatbot settings.'
+};
+
 export default async function ChatBot() {
   const { session } = await getUserAuth();
   const botConfiguration = await db.botConfiguration.findUnique({
