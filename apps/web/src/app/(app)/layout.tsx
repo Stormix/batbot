@@ -4,10 +4,24 @@ import Sidebar from '@/components/Sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NextAuthProvider from '@/lib/auth/Provider';
-import { checkAuth } from '@/lib/auth/utils';
+import { getUserAuth } from '@/lib/auth/utils';
+import { redirect } from 'next/navigation';
+import PostHogClient from '../posthog';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  await checkAuth();
+  const { session } = await getUserAuth();
+
+  if (!session) return redirect('/signin');
+
+  const posthog = PostHogClient();
+
+  posthog.capture({
+    distinctId: session.user.id,
+    event: 'Page was loaded'
+  });
+
+  await posthog.shutdown();
+
   return (
     <TooltipProvider>
       <NextAuthProvider>

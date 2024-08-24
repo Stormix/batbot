@@ -2,6 +2,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { cn } from '@/lib/utils/styles';
 import type { Metadata } from 'next';
 import { Inter, Rajdhani } from 'next/font/google';
+
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   description: 'Best streaming chat bot'
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
