@@ -1,10 +1,9 @@
 import type { Bot } from '@/bot';
 import { db } from '@/db';
 import env from '@/env';
-import type { KickContext } from '@/types/context';
+import type { Context, KickContext } from '@/types/context';
 import type { KickMessage, RawKickMessage } from '@/types/kick';
 import { Platform } from '@batbot/types';
-import type { Context } from 'vm';
 import Adapter from '../adapter';
 import { KickClient } from '../kick/client';
 
@@ -21,8 +20,9 @@ export default class KickAdapter extends Adapter<KickContext> {
     return `@${message.sender.username}`;
   }
 
-  isOwner(message: KickMessage): boolean {
-    return message.sender.username === env.KICK_CHANNEL || message.sender.username === env.KICK_USERNAME;
+  isOwner(message: Context['message']): boolean {
+    const username = (message as KickMessage).sender.username;
+    return username.toLowerCase() === this.bot.user?.name?.toLowerCase();
   }
 
   createContext(message: KickMessage): KickContext {

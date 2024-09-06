@@ -1,16 +1,22 @@
 import type BuiltinCommand from '@/lib/command';
 import type { Context } from '@/types/context';
+import { Role } from '@batbot/types';
 import type { BotCommand } from '@prisma/client';
 
+export const checkCommandPermission = (command: BuiltinCommand | BotCommand, context: Context) => {
+  switch (command.minRole) {
+    case Role.Owner:
+      return context.adapter.isOwner(context.message);
+
+    default:
+      return false;
+  }
+};
+
 export const checkCommandFlags = (command: BuiltinCommand | BotCommand, context: Context) => {
-  // TODO: Implement command flags
-  // if (command?.ownerOnly && !context.adapter.isOwner(context.message)) {
-  //   return `${context.atAuthor} this command can only be used by ${context.atOwner}! Do it one more time and I'll ban you!`;
-  // }
-  // if (!command.enabled) return `${context.atAuthor} this command is disabled!`;
-  // if (command?.ownerOnly && !context.adapter.isOwner(context.message)) {
-  //   return `${context.atAuthor} this command can only be used by ${context.atOwner}! Do it one more time and I'll ban you!`;
-  // }
+  if (!checkCommandPermission(command, context)) {
+    return `${context.atAuthor} you don't have permission to use this command!`;
+  }
 
   return null;
 };

@@ -22,7 +22,7 @@ export default class TwitchAdapter extends Adapter<TwitchContext> {
 
   isOwner(message: Context['message']) {
     const username = (message as PrivateMessage).username;
-    return username === env.TWITCH_USERNAME || username === env.TWITCH_CHANNEL;
+    return username.toLowerCase() === this.bot.user?.name?.toLowerCase();
   }
 
   createContext(message: PrivateMessage | BaseMessage): TwitchContext {

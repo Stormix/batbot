@@ -1,6 +1,7 @@
 import type { BuiltinCommandOptions } from '@/types/command';
 import type { Context } from '@/types/context';
-import type Bot from './bot-shard';
+
+import type { Bot } from '@/bot';
 import type Logger from './logger';
 
 abstract class BuiltinCommand {
@@ -9,6 +10,10 @@ abstract class BuiltinCommand {
   protected options: BuiltinCommandOptions;
 
   abstract name: string;
+
+  get minRole(): number {
+    return this.options.minRole ?? 0;
+  }
 
   get ownerOnly(): boolean {
     return (this.options.minRole ?? 0) >= 5;

@@ -1,8 +1,9 @@
 import '@/instrument';
 
 import type { Platform } from '@batbot/types';
-import type { BotConfiguration } from '@prisma/client';
+import type { BotConfiguration, User } from '@prisma/client';
 import { omit } from 'lodash';
+import { db } from './db';
 import Adapter from './lib/adapter';
 import KickAdapter from './lib/adapters/kick';
 import TwitchAdapter from './lib/adapters/twitch';
@@ -21,6 +22,7 @@ export class Bot extends Base {
   readonly channels: Partial<Record<Platform, string>> = {};
 
   adapters: Adapter<Context>[] = [];
+  user: User | null = null;
 
   constructor(config: BotConfiguration, channels: Partial<Record<Platform, string>>, mode: ManagerMode) {
     super();
@@ -56,6 +58,13 @@ export class Bot extends Base {
 
     await this.processor.load(); // Load commands
     await this.load_adapters(); // Load adapters
+
+    // Load user
+    this.user = await db.user.findUnique({
+      where: {
+        id: this.config.userId
+      }
+    });
   }
 
   async reload() {
